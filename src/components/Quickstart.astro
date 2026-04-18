@@ -9,8 +9,8 @@
         <span style="color:var(--accent)">Ship in a minute.</span>
       </h2>
       <p class="mt-5 text-[16px] leading-relaxed" style="color:var(--muted)">
-        From a one-line Docker pull to a full Kafka + Redis stack —
-        plus a Homebrew formula landing soon. Copy, paste, done.
+        Two commands on macOS, one-liner on Docker, full Kafka + Redis stack
+        when you need it. Copy, paste, done.
       </p>
     </div>
 
@@ -24,15 +24,15 @@
     </div>
 
     <div class="tabs card p-0 qs-card">
-      <input type="radio" name="qs" id="tab-hub" checked />
+      <input type="radio" name="qs" id="tab-brew" checked />
+      <input type="radio" name="qs" id="tab-hub" />
       <input type="radio" name="qs" id="tab-stack" />
-      <input type="radio" name="qs" id="tab-brew" />
       <input type="radio" name="qs" id="tab-source" />
 
       <nav class="flex items-center gap-0 px-3 pt-3 overflow-x-auto" aria-label="Quickstart paths">
+        <label for="tab-brew"   class="tab-label"><span class="qs-tab-ico">&#127866;</span>Homebrew<span class="ml-1.5 tag qs-best">recommended</span></label>
         <label for="tab-hub"    class="tab-label"><span class="qs-tab-ico">&#128051;</span>Docker</label>
         <label for="tab-stack"  class="tab-label"><span class="qs-tab-ico">&#9889;</span>Kafka &amp; Redis</label>
-        <label for="tab-brew"   class="tab-label"><span class="qs-tab-ico">&#127866;</span>Homebrew<span class="ml-1.5 tag qs-soon">soon</span></label>
         <label for="tab-source" class="tab-label"><span class="qs-tab-ico">&#9881;</span>From source</label>
         <span class="flex-1 border-b line self-end h-px"></span>
       </nav>
@@ -66,8 +66,8 @@
             <span class="qs-step-dot">2</span>
             <span>Verify it's alive</span>
           </div>
-<pre class="qs-verify-body"><span class="term-prompt">$</span> curl -s localhost:8025/api/health
-<span class="term-ok">&#123;"status":"ok","version":"1.2.0","smtp":"1025","uptime":"3s"&#125;</span></pre>
+<pre class="qs-verify-body"><span class="term-prompt">$</span> curl -s localhost:8025/health
+<span class="term-ok">&#123;"status":"ok","version":"3.6.0","smtp":"1025","uptime":"3s"&#125;</span></pre>
         </div>
       </div>
 
@@ -116,32 +116,19 @@
           <span class="term-dot" style="background:#ef4444"></span>
           <span class="term-dot" style="background:#eab308"></span>
           <span class="term-dot" style="background:#22c55e"></span>
-          <span class="ml-3 font-mono text-[11px]" style="color:var(--muted)">coming soon · native macOS binary</span>
+          <span class="ml-3 font-mono text-[11px]" style="color:var(--muted)">macOS · two commands · UI baked in</span>
           <button type="button" class="qs-copy" data-copy="brew-cmd" aria-label="Copy brew install">
             <svg class="qs-copy-i" width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" stroke="currentColor" stroke-width="1.6"/></svg>
             <svg class="qs-copy-ok" width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span class="qs-copy-t">copy</span>
           </button>
         </div>
-<pre class="term-body text-[13.5px]" data-copy-source="brew-cmd"><span class="term-dim"># formula in review — expected in the next release</span>
-<span class="term-prompt">$</span> brew install peixotomdb/tap/deadletter
+<pre class="term-body text-[13.5px]" data-copy-source="brew-cmd"><span class="term-prompt">$</span> brew install deadletter-engine/deadletter/deadletter
+<span class="term-prompt">$</span> brew services start deadletter
 
-<span class="term-prompt">$</span> deadletter
-<span class="term-dim">▸ SMTP sink   listening on :1025</span>
-<span class="term-dim">▸ HTTP API    listening on :8025</span>
-<span class="term-dim">▸ data dir    ~/Library/Application Support/deadletter</span>
-
-<span class="term-prompt">$</span> <span class="term-ok">deadletter --help</span>  <span class="term-dim"># CLI mirrors the REST API</span>
+<span class="term-dim"># done — UI at http://localhost:8025 · SMTP on :1025</span>
+<span class="term-dim"># relaunches on login · upgrade: deadletter update</span>
 </pre>
-        <div class="qs-waitlist">
-          <div class="qs-waitlist-head">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="1.6"/><path d="m3 7 9 7 9-7" stroke="currentColor" stroke-width="1.6"/></svg>
-            <span>Get pinged when the formula lands</span>
-          </div>
-          <a class="qs-waitlist-cta" href="https://github.com/peixotomdb/deadletter/issues/new?title=Homebrew+waitlist" target="_blank" rel="noopener noreferrer">
-            Open issue →
-          </a>
-        </div>
       </div>
 
       <!-- FROM SOURCE -->
@@ -217,13 +204,26 @@
 
 <script is:inline>
   (() => {
+    // Produce a paste-ready script: strip prompt glyphs ($, >) and dim
+    // comment/annotation spans so users can pipe straight into a shell.
+    const commandText = (src) => {
+      const clone = src.cloneNode(true);
+      clone.querySelectorAll('.term-prompt, .term-dim').forEach((n) => n.remove());
+      return (clone.textContent ?? '')
+        .split('\n')
+        .map((l) => l.replace(/^\s+/, ''))
+        .filter((l, i, arr) => !(l === '' && arr[i - 1] === ''))
+        .join('\n')
+        .trim();
+    };
+
     const btns = document.querySelectorAll('.qs-copy');
     btns.forEach((btn) => {
       btn.addEventListener('click', async () => {
         const key = btn.getAttribute('data-copy');
         const src = document.querySelector(`[data-copy-source="${key}"]`);
         if (!src) return;
-        const text = (src.textContent ?? '').trim();
+        const text = commandText(src);
         try {
           await navigator.clipboard.writeText(text);
           btn.classList.add('copied');
@@ -286,6 +286,18 @@
     padding: 0 5px;
     color: var(--accent);
     border-color: color-mix(in oklab, var(--accent) 45%, var(--line));
+  }
+  .qs-best {
+    font-size: 9.5px;
+    padding: 0 5px;
+    color: #86efac;
+    border-color: color-mix(in oklab, #22c55e 45%, var(--line));
+    background: color-mix(in oklab, #22c55e 12%, transparent);
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
   .qs-tab-ico {
     margin-right: 6px;
