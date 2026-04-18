@@ -2,5 +2,5 @@
 Site: deadletter.app
 
 /* SITE */
-Stack: Astro, Tailwind CSS v4, Vercel
+Stack: Astro, Tailwind CSS v4, GitHub Pages
 Standards: HTML5, CSS3

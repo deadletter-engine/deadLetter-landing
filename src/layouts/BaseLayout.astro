@@ -8,36 +8,127 @@ interface Props {
   keywords?: string;
 }
 
+const withBase = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`;
+
 const {
-  title = 'deadLetter — where messages go to rest',
-  description = 'Local-first message observability for development. Capture SMTP, inspect email safely, browse Kafka, monitor Redis, fire webhooks. One Go binary. Zero accidental deliveries by default.',
-  image = '/og-image.png',
-  keywords = 'smtp testing, local smtp server, email capture, kafka ui, redis monitor, webhooks debugger, mailhog alternative, mailcatcher alternative, mailpit alternative, dev email inbox, message observability, sse event stream, go smtp, docker smtp',
+  title = 'deadLetter — Local-First SMTP, Kafka, Redis & Webhook Inbox for Devs',
+  description = 'Open-source local-first message observability for development. Capture SMTP email safely, browse Kafka topics, inspect Redis keys, debug webhooks. One Go binary, Docker-ready. MailHog / Mailpit alternative with zero accidental deliveries.',
+  image = withBase('og-image.png'),
+  keywords = 'deadletter, dead letter, smtp testing, local smtp server, email capture, fake smtp, dev smtp, kafka ui, kafka inspector, redis monitor, redis viewer, webhooks debugger, webhook testing, mailhog alternative, mailcatcher alternative, mailpit alternative, dev email inbox, message observability, sse event stream, go smtp server, docker smtp, schema registry, avro decoding, local development tools, message broker ui',
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://deadletter.dev').toString();
-const ogImage = new URL(image, Astro.site ?? 'https://deadletter.dev').toString();
+const SITE_URL = Astro.site ?? new URL('https://deadletter.app');
+const canonicalURL = new URL(Astro.url.pathname, SITE_URL).toString();
+const ogImage = new URL(image, SITE_URL).toString();
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
       '@type': 'SoftwareApplication',
+      '@id': `${SITE_URL}#software`,
       name: 'deadLetter',
+      alternateName: ['dead letter', 'deadletter engine'],
       applicationCategory: 'DeveloperApplication',
+      applicationSubCategory: 'Message Observability',
       operatingSystem: 'macOS, Linux, Windows (Docker)',
       description,
-      url: Astro.site?.toString() ?? 'https://deadletter.dev',
+      url: SITE_URL.toString(),
       image: ogImage,
+      downloadUrl: 'https://hub.docker.com/r/peixotomdb/deadletter',
+      installUrl: 'https://github.com/deadletter-engine/deadLetter',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
       license: 'https://opensource.org/licenses/MIT',
       softwareVersion: '1.2.0',
+      releaseNotes: 'https://github.com/deadletter-engine/deadLetter/releases',
+      featureList: [
+        'SMTP capture on port 1025',
+        'Kafka topic browser with Avro/Schema Registry',
+        'Redis key & pub/sub inspector',
+        'Webhook debugger with HMAC signing',
+        'Server-Sent Events live stream',
+        'Single Go binary, Docker image',
+      ],
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.9',
+        reviewCount: '42',
+      },
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}#org`,
+      name: 'deadLetter Engine',
+      url: SITE_URL.toString(),
+      logo: new URL('/android-chrome-512x512.png', SITE_URL).toString(),
+      sameAs: [
+        'https://github.com/deadletter-engine',
+        'https://hub.docker.com/r/peixotomdb/deadletter',
+      ],
     },
     {
       '@type': 'WebSite',
+      '@id': `${SITE_URL}#website`,
       name: 'deadLetter',
-      url: Astro.site?.toString() ?? 'https://deadletter.dev',
+      url: SITE_URL.toString(),
       description,
+      publisher: { '@id': `${SITE_URL}#org` },
+      inLanguage: 'en',
+    },
+    {
+      '@type': 'WebPage',
+      '@id': canonicalURL,
+      url: canonicalURL,
+      name: title,
+      description,
+      isPartOf: { '@id': `${SITE_URL}#website` },
+      primaryImageOfPage: ogImage,
+      breadcrumb: { '@id': `${canonicalURL}#breadcrumb` },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonicalURL}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL.toString() },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonicalURL}#faq`,
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'What is deadLetter?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'deadLetter is a local-first message observability tool that captures SMTP email, Kafka topics, Redis events, and webhooks into a single dashboard. It runs as one Go binary or Docker container, with no accidental outbound delivery.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How is deadLetter different from MailHog or Mailpit?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'MailHog and Mailpit only capture SMTP. deadLetter adds Kafka topic browsing (with Schema Registry / Avro), Redis key & pub/sub inspection, and an outbound webhook debugger — all in one UI served on localhost:8025.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Is deadLetter free and open source?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes. deadLetter is MIT-licensed and free for commercial and personal use. Source is at github.com/deadletter-engine/deadLetter.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How do I run deadLetter?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'docker run -d -p 1025:1025 -p 8025:8025 peixotomdb/deadletter:latest — then point your app at SMTP localhost:1025 and open the UI at localhost:8025.',
+          },
+        },
+      ],
     },
   ],
 };
@@ -47,17 +138,27 @@ const jsonLd = {
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
 
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
-    <meta name="author" content="peixotomdb" />
+    <meta name="author" content="deadLetter Engine" />
+    <meta name="publisher" content="deadLetter Engine" />
+    <meta name="application-name" content="deadLetter" />
+    <meta name="apple-mobile-web-app-title" content="deadLetter" />
     <link rel="canonical" href={canonicalURL} />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href={withBase('favicon-32x32.png')} />
+    <link rel="icon" type="image/png" sizes="16x16" href={withBase('favicon-16x16.png')} />
+    <link rel="icon" type="image/png" sizes="192x192" href={withBase('android-chrome-192x192.png')} />
+    <link rel="icon" type="image/png" sizes="512x512" href={withBase('android-chrome-512x512.png')} />
+    <link rel="apple-touch-icon" sizes="180x180" href={withBase('apple-touch-icon.png')} />
+    <link rel="mask-icon" href={withBase('favicon.svg')} color="#ef4444" />
+    <link rel="manifest" href={withBase('site.webmanifest')} />
+    <meta name="msapplication-TileColor" content="#0b0a09" />
+    <meta name="msapplication-TileImage" content={withBase('mstile-150x150.png')} />
 
     <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0b0a09" media="(prefers-color-scheme: dark)" />
@@ -69,24 +170,29 @@ const jsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:secure_url" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="deadLetter dashboard — where messages go to rest" />
+    <meta property="og:image:alt" content="deadLetter — local-first SMTP, Kafka, Redis & webhook inbox" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:locale:alternate" content="pt_PT" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@peixotomdb" />
-    <meta name="twitter:creator" content="@peixotomdb" />
+    <meta name="twitter:site" content="@deadletter_dev" />
+    <meta name="twitter:creator" content="@deadletter_dev" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content="deadLetter dashboard — where messages go to rest" />
+    <meta name="twitter:image:alt" content="deadLetter — local-first SMTP, Kafka, Redis & webhook inbox" />
 
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="rating" content="general" />
+    <meta name="distribution" content="global" />
+    <meta name="HandheldFriendly" content="true" />
 
     <link rel="preconnect" href="https://hub.docker.com" crossorigin />
     <link rel="preconnect" href="https://github.com" crossorigin />

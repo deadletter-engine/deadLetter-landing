@@ -1,4 +1,21 @@
 User-agent: *
 Allow: /
+Disallow: /_a/
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
 
 Sitemap: https://deadletter.app/sitemap-index.xml
+Host: https://deadletter.app

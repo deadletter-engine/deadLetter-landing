@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import vercel from '@astrojs/vercel';
 import tailwindcss from '@tailwindcss/vite';
 
 const SITE = 'https://deadletter.app';
@@ -10,7 +9,6 @@ const SITE = 'https://deadletter.app';
 export default defineConfig({
   site: SITE,
   output: 'static',
-  adapter: vercel({ webAnalytics: { enabled: false } }),
   compressHTML: true,
   prefetch: false,
   build: {
