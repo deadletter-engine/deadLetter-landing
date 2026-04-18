@@ -1,0 +1,72 @@
+---
+---
+<section id="safety" class="py-24 sm:py-32">
+  <div class="container-x grid lg:grid-cols-12 gap-10 items-start">
+    <div class="lg:col-span-5 reveal">
+      <div class="eyebrow mb-4"><span class="numeral">07 / safety</span></div>
+      <h2 class="text-3xl sm:text-5xl tracking-[-0.025em] font-semibold">
+        Safe by default. <br/>
+        <span style="color:var(--accent)">Loud when it isn't.</span>
+      </h2>
+      <p class="mt-5 text-[16px] leading-relaxed" style="color:var(--muted)">
+        deadLetter is built for local and CI environments where an
+        accidental delivery can mean a real user gets a test email. Every
+        destructive action is opt-in, logged, and visible in the UI.
+      </p>
+    </div>
+
+    <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4">
+      <div class="card p-5">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="size-2 rounded-full" style="background:#22c55e" aria-hidden="true"></span>
+          <h4 class="font-semibold text-[15px]">Replay is opt-in</h4>
+        </div>
+        <p class="text-[13.5px] leading-relaxed" style="color:var(--muted)">
+          Until you flip <code class="font-mono text-[12px]" style="color:var(--fg)">REPLAY_ENABLED=true</code> and point
+          it at a target, replay returns an error.
+        </p>
+      </div>
+      <div class="card p-5">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="size-2 rounded-full" style="background:#22c55e" aria-hidden="true"></span>
+          <h4 class="font-semibold text-[15px]">Raw is untouched</h4>
+        </div>
+        <p class="text-[13.5px] leading-relaxed" style="color:var(--muted)">
+          The <code class="font-mono text-[12px]" style="color:var(--fg)">.eml</code> on disk is byte-exact. Previews
+          sanitize separately.
+        </p>
+      </div>
+      <div class="card p-5">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="size-2 rounded-full" style="background:#22c55e" aria-hidden="true"></span>
+          <h4 class="font-semibold text-[15px]">Sandboxed HTML</h4>
+        </div>
+        <p class="text-[13.5px] leading-relaxed" style="color:var(--muted)">
+          Rendered HTML is served in a sandboxed frame with no
+          network egress by default.
+        </p>
+      </div>
+      <div class="card p-5">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="size-2 rounded-full" style="background:#22c55e" aria-hidden="true"></span>
+          <h4 class="font-semibold text-[15px]">Signed webhooks</h4>
+        </div>
+        <p class="text-[13.5px] leading-relaxed" style="color:var(--muted)">
+          Outbound webhooks carry an HMAC-SHA256 signature and
+          retry with exponential backoff. Logs are keepable.
+        </p>
+      </div>
+      <div class="card p-5 sm:col-span-2" style="background:color-mix(in oklab,var(--accent) 6%,var(--bg-elev))">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="size-2 rounded-full" style="background:var(--accent)" aria-hidden="true"></span>
+          <h4 class="font-semibold text-[15px]">What deadLetter is <em>not</em></h4>
+        </div>
+        <p class="text-[13.5px] leading-relaxed" style="color:var(--muted)">
+          Not a production SMTP relay. Not a deliverability service. Not a
+          hardened multi-tenant mailbox. It is a <span style="color:var(--fg)">local-first observability cockpit</span> —
+          deliberately small, deliberately loud about what it sees.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

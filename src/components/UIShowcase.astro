@@ -1,0 +1,1295 @@
+---
+---
+<section id="ui" class="py-24 sm:py-32 relative">
+  <div class="container-x">
+    <div class="flex items-end justify-between gap-6 mb-12 flex-wrap">
+      <div class="max-w-2xl">
+        <div class="eyebrow mb-4">
+          <span class="numeral">00 / the ui</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl tracking-[-0.025em] font-semibold">
+          A cockpit you'll actually <span style="color:var(--accent)">want</span> to open.
+        </h2>
+        <p class="mt-5 text-[16px] leading-relaxed" style="color:var(--muted)">
+          No terminal required. deadLetter ships a static Next.js UI that
+          lives at <code class="font-mono text-[13px]" style="color:var(--fg)">localhost:8025</code> —
+          inbox, Kafka workspace, Redis tools, webhooks, settings. Live updates
+          over SSE. Dark mode by default.
+        </p>
+      </div>
+      <div class="flex items-center gap-2 font-mono text-[11px]" style="color:var(--subtle)">
+        <span class="live-dot" aria-hidden="true"></span>
+        everything below mirrors the real UI
+      </div>
+    </div>
+
+    <!-- ============ DASHBOARD screenshot ============ -->
+    <div class="browser-frame card relative overflow-hidden">
+      <div class="browser-chrome">
+        <div class="flex items-center gap-1.5">
+          <span class="term-dot" style="background:#ef4444"></span>
+          <span class="term-dot" style="background:#eab308"></span>
+          <span class="term-dot" style="background:#22c55e"></span>
+        </div>
+        <div class="browser-url">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5Zm3 8V7a3 3 0 0 0-6 0v3h6Z" stroke="currentColor" stroke-width="1.4"/></svg>
+          localhost:8025<span style="color:var(--accent)">/</span>
+        </div>
+        <div class="ml-auto flex items-center gap-1.5 font-mono text-[10.5px]" style="color:var(--subtle)">
+          <span class="live-dot" aria-hidden="true"></span>
+          live
+        </div>
+      </div>
+
+      <!-- dashboard shell -->
+      <div class="dash-shell">
+        <header class="dash-topbar">
+          <a class="dash-brand">
+            <span aria-hidden="true" class="text-base leading-none">&#128238;</span>
+            <span class="font-semibold text-[13px]">deadLetter</span>
+            <span class="tag" style="font-size:10px;padding:1px 6px">v1.2.0</span>
+          </a>
+          <nav class="dash-topnav">
+            <a class="dash-nav active"><span class="nav-ico"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 12 12 4l9 8M5 10v10h14V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Home</a>
+            <a class="dash-nav"><span class="nav-ico"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="1.6"/><path d="m3 7 9 7 9-7" stroke="currentColor" stroke-width="1.6"/></svg></span>Email</a>
+            <a class="dash-nav"><span class="nav-ico"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="6" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="18" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/><path d="m8 7 8 4M8 17l8-4" stroke="currentColor" stroke-width="1.6"/></svg></span>Kafka</a>
+            <a class="dash-nav"><span class="nav-ico"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="6" rx="8" ry="3" stroke="currentColor" stroke-width="1.6"/><path d="M4 6v12c0 1.66 3.58 3 8 3s8-1.34 8-3V6" stroke="currentColor" stroke-width="1.6"/></svg></span>Redis</a>
+            <a class="dash-nav"><span class="nav-ico"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="m6 17 3.13-5.78c.53-.97.1-2.18-.5-3.1a4 4 0 1 1 6.89-4.06" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Webhooks</a>
+          </nav>
+          <div class="dash-actions">
+            <span class="dash-icon" title="mute"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M11 5 6 9H3v6h3l5 4V5ZM17 9l4 6M21 9l-4 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+            <span class="dash-icon" title="dark"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M20 15A8 8 0 1 1 9 4a6 6 0 0 0 11 11Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+            <span class="dash-icon" title="settings"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+          </div>
+        </header>
+
+        <div class="dash-main">
+          <div class="dash-hero">
+            <span class="live-pill">
+              <span class="live-dot" aria-hidden="true"></span>
+              LIVE · 6693 CAPTURED
+            </span>
+            <h3 class="dash-title">
+              where messages go to <span class="dash-strike">rest</span>
+            </h3>
+            <p class="dash-sub">
+              Capture, inspect, and debug SMTP · Kafka · Redis · Webhooks —
+              one place, one shell, zero noise.
+            </p>
+          </div>
+
+          <div class="dash-grid">
+            <article class="dash-card">
+              <div class="dash-card-head">
+                <span class="dash-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="1.6"/><path d="m3 7 9 7 9-7" stroke="currentColor" stroke-width="1.6"/></svg></span>
+                <div class="min-w-0">
+                  <div class="dash-card-title">Email Inbox</div>
+                  <div class="dash-card-sub">SMTP sink for local development</div>
+                </div>
+                <svg class="dash-ext" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="dash-stats">
+                <div><div class="dash-v">6693</div><div class="dash-k">captured</div></div>
+                <div><div class="dash-v">2.0 MB</div><div class="dash-k">storage</div></div>
+                <div><div class="dash-v">:1025</div><div class="dash-k">smtp</div></div>
+                <div><div class="dash-v">:8025</div><div class="dash-k">http</div></div>
+              </div>
+              <div class="dash-status ok"><span></span>listening</div>
+            </article>
+
+            <article class="dash-card">
+              <div class="dash-card-head">
+                <span class="dash-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="6" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="18" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/><path d="m8 7 8 4M8 17l8-4" stroke="currentColor" stroke-width="1.6"/></svg></span>
+                <div class="min-w-0">
+                  <div class="dash-card-title">Kafka</div>
+                  <div class="dash-card-sub">Topics, consumers, messages</div>
+                </div>
+                <svg class="dash-ext" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="dash-stats">
+                <div><div class="dash-v">0</div><div class="dash-k">topics</div></div>
+                <div><div class="dash-v">0</div><div class="dash-k">consumers</div></div>
+                <div><div class="dash-v">localhost:9092</div><div class="dash-k">broker</div></div>
+                <div><div class="dash-v">—</div><div class="dash-k">registry</div></div>
+              </div>
+              <div class="dash-status warn"><span></span>offline</div>
+            </article>
+
+            <article class="dash-card">
+              <div class="dash-card-head">
+                <span class="dash-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="6" rx="8" ry="3" stroke="currentColor" stroke-width="1.6"/><path d="M4 6v12c0 1.66 3.58 3 8 3s8-1.34 8-3V6M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3" stroke="currentColor" stroke-width="1.6"/></svg></span>
+                <div class="min-w-0">
+                  <div class="dash-card-title">Redis</div>
+                  <div class="dash-card-sub">Pub/Sub channels and keys</div>
+                </div>
+                <svg class="dash-ext" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="dash-stats">
+                <div><div class="dash-v">8.6.2</div><div class="dash-k">version</div></div>
+                <div><div class="dash-v">0</div><div class="dash-k">keys</div></div>
+                <div><div class="dash-v">localhost:6379</div><div class="dash-k">server</div></div>
+                <div><div class="dash-v">0</div><div class="dash-k">db</div></div>
+              </div>
+              <div class="dash-status ok"><span></span>connected</div>
+            </article>
+
+            <article class="dash-card accent">
+              <div class="dash-card-head">
+                <span class="dash-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2"/><path d="m6 17 3.13-5.78c.53-.97.1-2.18-.5-3.1a4 4 0 1 1 6.89-4.06"/><path d="m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8"/></svg></span>
+                <div class="min-w-0">
+                  <div class="dash-card-title">Webhooks <span class="nav-badge accent" style="font-size:9px;margin-left:4px">NEW</span></div>
+                  <div class="dash-card-sub">Capture, inspect, replay HTTP</div>
+                </div>
+                <svg class="dash-ext" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="dash-stats">
+                <div><div class="dash-v">0</div><div class="dash-k">captured</div></div>
+                <div><div class="dash-v">off</div><div class="dash-k">forward</div></div>
+                <div><div class="dash-v">/webhooks/*</div><div class="dash-k">endpoint</div></div>
+                <div><div class="dash-v">hmac</div><div class="dash-k">verify</div></div>
+              </div>
+              <div class="dash-status ok"><span></span>listening</div>
+            </article>
+          </div>
+
+          <div class="dash-chips">
+            <span class="dash-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="1.6"/><path d="m3 7 9 7 9-7" stroke="currentColor" stroke-width="1.6"/></svg>inbox</span>
+            <span class="dash-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M4 4h3v16H4zM10 10h3v10h-3zM16 7h3v13h-3z" stroke="currentColor" stroke-width="1.6"/></svg>topics</span>
+            <span class="dash-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 12h3l2-5 3 10 2-7 2 5h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>channels</span>
+            <span class="dash-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="m6 17 3.13-5.78c.53-.97.1-2.18-.5-3.1a4 4 0 1 1 6.89-4.06" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>hooks</span>
+            <span class="dash-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><circle cx="8" cy="15" r="4" stroke="currentColor" stroke-width="1.6"/><path d="m11 12 9-9M15 4h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>keys</span>
+            <span class="dash-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0Z" stroke="currentColor" stroke-width="1.6"/><path d="m8 12 2 2 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>health</span>
+          </div>
+
+          <div class="dash-foot">deadLetter v1.2.0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ Email workspace ============ -->
+    <div class="browser-frame card relative overflow-hidden mt-10">
+      <div class="browser-chrome">
+        <div class="flex items-center gap-1.5">
+          <span class="term-dot" style="background:#ef4444"></span>
+          <span class="term-dot" style="background:#eab308"></span>
+          <span class="term-dot" style="background:#22c55e"></span>
+        </div>
+        <div class="browser-url">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5Zm3 8V7a3 3 0 0 0-6 0v3h6Z" stroke="currentColor" stroke-width="1.4"/></svg>
+          localhost:8025<span style="color:var(--accent)">/email</span>
+        </div>
+        <div class="ml-auto flex items-center gap-1.5 font-mono text-[10.5px]" style="color:var(--subtle)">
+          <span class="live-dot" aria-hidden="true"></span>
+          live
+        </div>
+      </div>
+
+      <!-- status bar -->
+      <div class="mail-statusbar">
+        <span class="ms-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="1.6"/><path d="m3 7 9 7 9-7" stroke="currentColor" stroke-width="1.6"/></svg><b>SMTP</b> listening · <span class="ms-accent">:1025</span></span>
+        <span class="ms-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7L3 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 3v5h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><b>REPLAY</b> <span class="dot-ok"></span>Enabled</span>
+        <span class="ms-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><b>TODAY</b> <span class="ms-v">24</span></span>
+        <span class="ms-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M4 12h4l2-6 4 12 2-6h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><b>UPTIME</b> <span class="ms-v">4m 11s</span></span>
+        <span class="ms-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12a7 7 0 0 1 14 0M8 12a4 4 0 0 1 8 0M11 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0Z" stroke="currentColor" stroke-width="1.6"/></svg><b>EVENTS</b> <span class="dot-ok"></span>connected</span>
+        <span class="ms-chip ms-toast"><span class="ms-spark"></span>New email from <span class="ms-accent">Acme &lt;noreply@acme.test&gt;</span></span>
+      </div>
+
+      <!-- email shell -->
+      <div class="mail-shell">
+        <!-- inbox column -->
+        <section class="mail-inbox">
+          <header class="mail-inbox-head">
+            <div class="flex items-center gap-2">
+              <span class="mail-inbox-title">Inbox</span>
+              <span class="mail-count">24</span>
+              <div class="ml-auto flex items-center gap-1.5" style="color:var(--muted)">
+                <span class="mi-icon" title="refresh"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="mi-icon" title="auto"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="m12 3 2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+                <span class="mi-icon" title="delete"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m-8 0v13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+              </div>
+              <span class="mail-sort">All · Newest <svg width="9" height="9" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </div>
+            <div class="mail-search">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <span>Search…</span>
+            </div>
+          </header>
+
+          <ul class="mail-inbox-list">
+            <li class="mi-row selected">
+              <span class="avatar" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)">AN</span>
+              <div class="min-w-0 flex-1">
+                <div class="mi-subject">Welcome to Acme</div>
+                <div class="mi-meta"><span>Acme &lt;noreply</span><span class="mi-sep">·</span><span>less than a minute ago</span></div>
+              </div>
+            </li>
+            <li class="mi-row">
+              <span class="avatar" style="background:linear-gradient(135deg,#f472b6,#be185d)">MY</span>
+              <div class="min-w-0 flex-1">
+                <div class="mi-subject">Build report</div>
+                <div class="mi-meta"><span>myfpus</span><span class="mi-sep">·</span><span>1 minute ago</span></div>
+              </div>
+            </li>
+            <li class="mi-row">
+              <span class="avatar" style="background:linear-gradient(135deg,#fb923c,#c2410c)">PX</span>
+              <div class="min-w-0 flex-1">
+                <div class="mi-subject">Build report</div>
+                <div class="mi-meta"><span>pxnfgx</span><span class="mi-sep">·</span><span>1 minute ago</span></div>
+              </div>
+            </li>
+            <li class="mi-row">
+              <span class="avatar" style="background:linear-gradient(135deg,#eab308,#a16207)">YN</span>
+              <div class="min-w-0 flex-1">
+                <div class="mi-subject">Automated email</div>
+                <div class="mi-meta"><span>ynyaky</span><span class="mi-sep">·</span><span>1 minute ago</span></div>
+              </div>
+            </li>
+            <li class="mi-row">
+              <span class="avatar" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)">KD</span>
+              <div class="min-w-0 flex-1">
+                <div class="mi-subject">Random notification</div>
+                <div class="mi-meta"><span>kdktxy</span><span class="mi-sep">·</span><span>1 minute ago</span></div>
+              </div>
+            </li>
+            <li class="mi-row">
+              <span class="avatar" style="background:linear-gradient(135deg,#22d3ee,#0e7490)">HS</span>
+              <div class="min-w-0 flex-1">
+                <div class="mi-subject">Hello there 👋</div>
+                <div class="mi-meta"><span>hsbvzp</span><span class="mi-sep">·</span><span>1 minute ago</span></div>
+              </div>
+            </li>
+            <li class="mi-row">
+              <span class="avatar" style="background:linear-gradient(135deg,#a855f7,#6d28d9)">IA</span>
+              <div class="min-w-0 flex-1">
+                <div class="mi-subject">Automated email</div>
+                <div class="mi-meta"><span>iaheyf</span><span class="mi-sep">·</span><span>1 minute ago</span></div>
+              </div>
+            </li>
+            <li class="mi-row">
+              <span class="avatar" style="background:linear-gradient(135deg,#10b981,#047857)">YA</span>
+              <div class="min-w-0 flex-1">
+                <div class="mi-subject">Deadletter ping</div>
+                <div class="mi-meta"><span>yahvrq</span><span class="mi-sep">·</span><span>1 minute ago</span></div>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <!-- detail -->
+        <section class="mail-detail">
+          <header class="md-header">
+            <div class="min-w-0 flex-1">
+              <h4 class="md-subject">Welcome to Acme</h4>
+              <div class="md-meta">
+                <span>Acme &lt;noreply@acme.test&gt;</span>
+                <span class="md-arrow">→</span>
+                <span>you@deadletter.local</span>
+              </div>
+              <div class="md-time"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> less than a minute ago</div>
+            </div>
+            <div class="md-actions">
+              <button class="md-replay"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Replay</button>
+              <button class="md-more" aria-label="more">···</button>
+            </div>
+          </header>
+
+          <div class="md-body">
+            <div class="md-card">
+              <div class="md-card-rule"></div>
+              <div class="md-card-body">
+                <h5>Welcome aboard</h5>
+                <p>Hey there — your account is ready. Click the button below to get started.</p>
+                <div class="md-cta">Get started</div>
+                <p class="md-fine">If you didn't sign up, ignore this message.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============ 3-up secondary shots ============ -->
+    <div class="mt-10 grid lg:grid-cols-3 gap-4">
+      <!-- Kafka tail -->
+      <article class="card overflow-hidden">
+        <header class="px-4 py-2.5 border-b line flex items-center gap-2">
+          <div class="flex items-center gap-1.5">
+            <span class="term-dot" style="background:#ef4444"></span>
+            <span class="term-dot" style="background:#eab308"></span>
+            <span class="term-dot" style="background:#22c55e"></span>
+          </div>
+          <span class="font-mono text-[11px]" style="color:var(--muted)">/kafka · tail <span style="color:var(--fg)">orders</span></span>
+          <span class="ml-auto live-dot" aria-hidden="true"></span>
+        </header>
+        <div class="p-3 space-y-1.5 font-mono text-[11.5px]">
+          <div class="kafka-row"><span class="kp">p0</span><span class="ko">1406</span><span class="kt">19:23:47</span><span class="kv">&#123;"orderId":"A7F31","total":82.10&#125;</span></div>
+          <div class="kafka-row"><span class="kp">p2</span><span class="ko">1407</span><span class="kt">19:23:48</span><span class="kv">&#123;"orderId":"A7F32","total":14.00&#125;</span></div>
+          <div class="kafka-row"><span class="kp">p1</span><span class="ko">891</span><span class="kt">19:23:49</span><span class="kv">&#123;"orderId":"A7F33","total":221.50&#125;</span></div>
+          <div class="kafka-row"><span class="kp">p2</span><span class="ko">1408</span><span class="kt">19:23:49</span><span class="kv">&#123;"orderId":"A7F34","total":9.99&#125;</span></div>
+          <div class="kafka-row highlight"><span class="kp">p0</span><span class="ko">1407</span><span class="kt">19:23:50</span><span class="kv">&#123;"orderId":"A7F35","total":45.00&#125;</span></div>
+          <div class="kafka-row"><span class="kp">p1</span><span class="ko">892</span><span class="kt">19:23:51</span><span class="kv">&#123;"orderId":"A7F36","total":9.00&#125;</span></div>
+          <div class="kafka-row new"><span class="kp">p2</span><span class="ko">1409</span><span class="kt">19:23:51</span><span class="kv">&#123;"orderId":"A7F37","total":60.10&#125;<span class="caret"></span></span></div>
+        </div>
+        <footer class="px-4 py-2 border-t line flex items-center gap-2 font-mono text-[10.5px]" style="color:var(--subtle)">
+          <span>3 partitions</span><span>·</span><span>lag 0</span><span>·</span><span>group: inventory-svc</span>
+        </footer>
+      </article>
+
+      <!-- Redis pub/sub -->
+      <article class="card overflow-hidden">
+        <header class="px-4 py-2.5 border-b line flex items-center gap-2">
+          <div class="flex items-center gap-1.5">
+            <span class="term-dot" style="background:#ef4444"></span>
+            <span class="term-dot" style="background:#eab308"></span>
+            <span class="term-dot" style="background:#22c55e"></span>
+          </div>
+          <span class="font-mono text-[11px]" style="color:var(--muted)">/redis · subscribe <span style="color:var(--fg)">notif:*</span></span>
+          <span class="ml-auto live-dot" aria-hidden="true"></span>
+        </header>
+        <div class="p-4">
+          <div class="grid grid-cols-3 gap-2 mb-3">
+            <div class="metric"><div class="metric-v">1.4K</div><div class="metric-l">msg/s</div></div>
+            <div class="metric"><div class="metric-v">12</div><div class="metric-l">channels</div></div>
+            <div class="metric"><div class="metric-v">2.1 MB</div><div class="metric-l">mem</div></div>
+          </div>
+          <!-- tiny sparkline -->
+          <svg viewBox="0 0 200 50" class="w-full h-10" aria-hidden="true">
+            <path d="M0 40 L20 30 L40 35 L60 22 L80 28 L100 14 L120 20 L140 8 L160 18 L180 10 L200 16"
+                  fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M0 40 L20 30 L40 35 L60 22 L80 28 L100 14 L120 20 L140 8 L160 18 L180 10 L200 16 L200 50 L0 50 Z"
+                  fill="var(--accent)" opacity="0.12"/>
+          </svg>
+          <ul class="mt-3 space-y-1 font-mono text-[11.5px]">
+            <li class="redis-row"><span class="ch">notif:user:19</span><span class="msg">profile.updated</span></li>
+            <li class="redis-row"><span class="ch">notif:order:A7F31</span><span class="msg">shipped</span></li>
+            <li class="redis-row"><span class="ch">notif:user:42</span><span class="msg">login</span></li>
+            <li class="redis-row"><span class="ch">notif:cart:8</span><span class="msg">abandoned</span></li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Webhooks -->
+      <article class="card overflow-hidden" style="border-color:color-mix(in oklab,var(--accent) 45%,var(--line))">
+        <header class="px-4 py-2.5 border-b line flex items-center gap-2">
+          <div class="flex items-center gap-1.5">
+            <span class="term-dot" style="background:#ef4444"></span>
+            <span class="term-dot" style="background:#eab308"></span>
+            <span class="term-dot" style="background:#22c55e"></span>
+          </div>
+          <span class="font-mono text-[11px]" style="color:var(--muted)">/webhooks · <span style="color:var(--accent)">deliveries</span></span>
+          <span class="ml-auto tag new"></span>
+        </header>
+        <ul class="divide-y line">
+          <li class="wh-row">
+            <span class="wh-dot ok"></span>
+            <div class="min-w-0 flex-1">
+              <div class="wh-ep">dev-bot <span class="wh-url">https://hooks.local/dev</span></div>
+              <div class="wh-meta">email.captured · 47ms · HMAC ✓</div>
+            </div>
+            <span class="wh-status ok">200</span>
+          </li>
+          <li class="wh-row">
+            <span class="wh-dot ok"></span>
+            <div class="min-w-0 flex-1">
+              <div class="wh-ep">slack <span class="wh-url">https://hooks.slack.com/…</span></div>
+              <div class="wh-meta">email.duplicate · 112ms · HMAC ✓</div>
+            </div>
+            <span class="wh-status ok">202</span>
+          </li>
+          <li class="wh-row">
+            <span class="wh-dot warn"></span>
+            <div class="min-w-0 flex-1">
+              <div class="wh-ep">analytics <span class="wh-url">https://analytics.local/in</span></div>
+              <div class="wh-meta">retry 2/5 · exp backoff · 1.3s</div>
+            </div>
+            <span class="wh-status warn">429</span>
+          </li>
+          <li class="wh-row">
+            <span class="wh-dot ok"></span>
+            <div class="min-w-0 flex-1">
+              <div class="wh-ep">qa-inbox <span class="wh-url">https://qa.local/capture</span></div>
+              <div class="wh-meta">kafka.message · 23ms · HMAC ✓</div>
+            </div>
+            <span class="wh-status ok">200</span>
+          </li>
+          <li class="wh-row">
+            <span class="wh-dot err"></span>
+            <div class="min-w-0 flex-1">
+              <div class="wh-ep">legacy-bus <span class="wh-url">https://old.local/recv</span></div>
+              <div class="wh-meta">disabled · 5 consecutive 5xx</div>
+            </div>
+            <span class="wh-status err">500</span>
+          </li>
+        </ul>
+      </article>
+    </div>
+
+    <!-- caption -->
+    <div class="mt-8 flex flex-wrap items-center gap-2 justify-center font-mono text-[11px]" style="color:var(--subtle)">
+      <span class="tag">static export</span>
+      <span class="tag">zero runtime deps</span>
+      <span class="tag">SSE live updates</span>
+      <span class="tag">dark / light</span>
+      <span class="tag">⌘K everywhere</span>
+      <span class="tag">keyboard first</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .browser-frame {
+    border-radius: 18px;
+    box-shadow:
+      0 1px 0 color-mix(in oklab, var(--fg) 6%, transparent) inset,
+      0 40px 120px -40px color-mix(in oklab, var(--accent) 35%, transparent),
+      0 10px 40px -10px rgba(0, 0, 0, 0.4);
+  }
+  .browser-chrome {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg-elev) 70%, transparent);
+  }
+  .browser-url {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg) 60%, transparent);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    min-width: 260px;
+    max-width: 420px;
+  }
+
+  /* dashboard */
+  .dash-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 560px;
+    background:
+      radial-gradient(ellipse 70% 90% at 50% -10%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 55%),
+      color-mix(in oklab, var(--bg) 55%, black);
+  }
+  .dash-topbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg-elev) 70%, transparent);
+  }
+  .dash-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dash-topnav {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .dash-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    color: var(--muted);
+    border: 1px solid transparent;
+  }
+  .dash-nav .nav-ico { color: inherit; }
+  .dash-nav.active {
+    color: var(--fg);
+    background: color-mix(in oklab, var(--accent) 12%, transparent);
+    border-color: color-mix(in oklab, var(--accent) 35%, transparent);
+  }
+  .dash-nav.active .nav-ico { color: var(--accent); }
+  .dash-actions {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--muted);
+  }
+  .dash-icon {
+    display: inline-flex;
+    width: 22px;
+    height: 22px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    color: var(--muted);
+  }
+  .dash-main {
+    flex: 1;
+    padding: 40px 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .dash-hero {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .live-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, #22c55e 45%, var(--line));
+    background: color-mix(in oklab, #22c55e 8%, transparent);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: #86efac;
+  }
+  .dash-title {
+    margin: 4px 0 0;
+    font-size: clamp(28px, 3.6vw, 48px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    color: var(--fg);
+  }
+  .dash-strike {
+    position: relative;
+    color: color-mix(in oklab, var(--accent) 85%, var(--fg));
+  }
+  .dash-strike::after {
+    content: '';
+    position: absolute;
+    left: -4%;
+    right: -4%;
+    top: 50%;
+    height: 3px;
+    background: var(--accent);
+    transform: rotate(-3deg);
+    border-radius: 2px;
+  }
+  .dash-sub {
+    max-width: 560px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .dash-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+  @media (max-width: 1100px) {
+    .dash-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 620px) {
+    .dash-grid { grid-template-columns: 1fr; }
+    .dash-topnav .dash-nav:not(.active) { display: none; }
+  }
+  .dash-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg-elev) 85%, transparent);
+  }
+  .dash-card.accent {
+    border-color: color-mix(in oklab, var(--accent) 45%, var(--line));
+    background:
+      linear-gradient(180deg, color-mix(in oklab, var(--accent) 8%, transparent), transparent 60%),
+      color-mix(in oklab, var(--bg-elev) 85%, transparent);
+  }
+  .dash-card-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .dash-ico {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 10%, transparent);
+    flex-shrink: 0;
+  }
+  .dash-card-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--fg);
+  }
+  .dash-card-sub {
+    margin-top: 2px;
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .dash-ext {
+    margin-left: auto;
+    color: var(--subtle);
+    flex-shrink: 0;
+  }
+  .dash-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 14px;
+  }
+  .dash-v {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--fg);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dash-k {
+    margin-top: 2px;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    color: var(--subtle);
+    text-transform: uppercase;
+  }
+  .dash-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    width: max-content;
+  }
+  .dash-status span {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+  }
+  .dash-status.ok   { color: #86efac; background: color-mix(in oklab, #22c55e 12%, transparent); }
+  .dash-status.ok   span { background: #22c55e; box-shadow: 0 0 0 3px color-mix(in oklab, #22c55e 25%, transparent); }
+  .dash-status.warn { color: var(--warn); background: color-mix(in oklab, var(--warn) 12%, transparent); }
+  .dash-status.warn span { background: var(--warn); box-shadow: 0 0 0 3px color-mix(in oklab, var(--warn) 25%, transparent); }
+  .dash-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 4px;
+  }
+  .dash-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg-elev) 70%, transparent);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+  .dash-foot {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--subtle);
+    padding-top: 8px;
+  }
+
+  /* email workspace */
+  .mail-statusbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg-elev) 78%, transparent);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+  }
+  .ms-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-right: 1px solid var(--line);
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .ms-chip b {
+    color: var(--fg);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .ms-chip.ms-toast { border-right: 0; margin-left: auto; color: var(--fg); }
+  .ms-accent { color: var(--accent); }
+  .ms-v { color: var(--fg); font-variant-numeric: tabular-nums; }
+  .dot-ok {
+    width: 6px; height: 6px; border-radius: 999px;
+    background: #22c55e;
+    box-shadow: 0 0 0 3px color-mix(in oklab, #22c55e 25%, transparent);
+  }
+  .ms-spark {
+    width: 8px; height: 8px; border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 30%, transparent);
+  }
+  @media (max-width: 820px) {
+    .ms-chip { padding: 6px 10px; }
+    .ms-toast { display: none; }
+  }
+
+  .mail-shell {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    min-height: 560px;
+    background: color-mix(in oklab, var(--bg) 55%, black);
+  }
+  @media (max-width: 820px) {
+    .mail-shell { grid-template-columns: 1fr; }
+    .mail-inbox { display: none; }
+  }
+  .mail-inbox {
+    border-right: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg-elev) 70%, transparent);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .mail-inbox-head {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .mail-inbox-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fg);
+  }
+  .mail-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    padding: 1px 7px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg) 50%, transparent);
+  }
+  .mi-icon {
+    display: inline-flex;
+    width: 22px; height: 22px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    color: var(--muted);
+  }
+  .mi-icon:hover { color: var(--fg); background: color-mix(in oklab, var(--fg) 6%, transparent); }
+  .mail-sort {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    padding: 3px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+  .mail-search {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg) 55%, transparent);
+    color: var(--subtle);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+  }
+  .mail-inbox-list {
+    overflow: hidden;
+    padding: 4px;
+  }
+  .mi-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .mi-row:hover { background: color-mix(in oklab, var(--fg) 5%, transparent); }
+  .mi-row.selected {
+    background: color-mix(in oklab, var(--accent) 10%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 25%, transparent);
+  }
+  .avatar {
+    width: 28px; height: 28px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .mi-subject {
+    font-size: 12.5px;
+    color: var(--fg);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mi-meta {
+    margin-top: 2px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--subtle);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mi-sep { opacity: 0.6; }
+
+  .mail-detail {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: color-mix(in oklab, var(--bg) 35%, black);
+  }
+  .md-header {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .md-subject {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--fg);
+    margin: 0;
+  }
+  .md-meta {
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+  .md-arrow { color: var(--accent); }
+  .md-time {
+    margin-top: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--subtle);
+  }
+  .md-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .md-replay {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 30px;
+    padding: 0 12px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg-elev) 80%, transparent);
+    color: var(--fg);
+    font-size: 12px;
+  }
+  .md-more {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    background: transparent;
+    letter-spacing: 1px;
+  }
+  .md-body {
+    padding: 22px;
+    overflow: auto;
+  }
+  .md-card {
+    border-radius: 14px;
+    overflow: hidden;
+    background: #f7f5f2;
+    box-shadow: 0 24px 60px -24px rgba(0,0,0,0.55);
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .md-card-rule {
+    height: 14px;
+    background: linear-gradient(90deg, #f7f5f2, #e9e4dc);
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .md-card-body {
+    padding: 34px 40px 40px;
+    color: #1f2937;
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+  .md-card-body h5 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #111827;
+    margin: 0 0 12px;
+  }
+  .md-card-body p { margin: 0 0 14px; }
+  .md-cta {
+    display: inline-block;
+    margin: 6px 0 10px;
+    padding: 11px 22px;
+    border-radius: 10px;
+    background: #0f172a;
+    color: #fff;
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+  .md-fine { color: #6b7280; font-size: 12.5px; }
+
+  .app-shell {
+    display: grid;
+    grid-template-columns: 200px 300px 1fr;
+    min-height: 560px;
+    background: color-mix(in oklab, var(--bg) 55%, black);
+  }
+  @media (max-width: 960px) {
+    .app-shell { grid-template-columns: 1fr; }
+    .app-side, .app-list { display: none; }
+  }
+  .app-side {
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    background: color-mix(in oklab, var(--bg-elev) 85%, transparent);
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 9px;
+    border-radius: 8px;
+    color: var(--muted);
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-item:hover { color: var(--fg); background: color-mix(in oklab, var(--fg) 5%, transparent); }
+  .nav-item.active {
+    color: var(--fg);
+    background: color-mix(in oklab, var(--accent) 12%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent);
+  }
+  .nav-ico {
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+  }
+  .nav-badge {
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--fg) 10%, transparent);
+    color: var(--muted);
+  }
+  .nav-badge.accent {
+    background: var(--accent);
+    color: #0b0a09;
+    font-weight: 700;
+  }
+
+  .app-list {
+    border-right: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg-elev) 60%, transparent);
+    overflow: hidden;
+  }
+  .inbox-list { padding: 4px; }
+  .mail-row {
+    display: flex;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .mail-row:hover { background: color-mix(in oklab, var(--fg) 4%, transparent); }
+  .mail-row.selected {
+    background: color-mix(in oklab, var(--accent) 10%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 30%, transparent);
+  }
+  .unread-dot {
+    width: 6px; height: 6px; border-radius: 999px;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+  .mail-row:not(.unread) .unread-dot { background: transparent; box-shadow: inset 0 0 0 1px var(--line-strong); }
+  .mail-from {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  .mail-row.unread .mail-from { color: var(--fg); }
+  .mail-time {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--subtle);
+    font-variant-numeric: tabular-nums;
+  }
+  .mail-subject {
+    margin-top: 2px;
+    font-size: 12.5px;
+    color: var(--fg);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mail-row:not(.unread) .mail-subject { color: var(--muted); }
+  .mail-preview {
+    margin-top: 2px;
+    font-size: 11.5px;
+    color: var(--subtle);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dup-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: color-mix(in oklab, var(--warn) 20%, transparent);
+    color: var(--warn);
+    border: 1px solid color-mix(in oklab, var(--warn) 40%, var(--line));
+  }
+
+  .app-detail {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 28px;
+    padding: 0 10px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg-elev) 80%, transparent);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .pill-btn:hover { color: var(--fg); border-color: var(--line-strong); }
+  .pill-btn.danger:hover { color: var(--danger); border-color: color-mix(in oklab, var(--danger) 50%, var(--line)); }
+
+  .seg-btn {
+    padding: 6px 10px;
+    border-radius: 8px 8px 0 0;
+    border: 1px solid transparent;
+    border-bottom: none;
+    color: var(--muted);
+    background: transparent;
+    cursor: pointer;
+  }
+  .seg-btn.active {
+    color: var(--fg);
+    border-color: var(--line);
+    background: color-mix(in oklab, var(--bg-elev) 80%, transparent);
+  }
+  .dup-warn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--warn);
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--warn) 40%, var(--line));
+    background: color-mix(in oklab, var(--warn) 8%, transparent);
+  }
+
+  .email-preview {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f8f7f4;
+    color: #1f2937;
+    max-width: 540px;
+  }
+  .email-head {
+    padding: 18px 22px;
+    background: linear-gradient(180deg, #111827, #1f2937);
+    color: #fff;
+  }
+  .email-logo {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: #ef4444;
+    margin-bottom: 6px;
+  }
+  .email-title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .email-body {
+    padding: 22px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .email-body p { margin: 0 0 12px; }
+  .email-cta {
+    display: inline-block;
+    margin: 12px 0;
+    padding: 11px 22px;
+    border-radius: 8px;
+    background: #111827;
+    color: #fff;
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+  .email-foot {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #e5e7eb;
+    font-size: 11.5px;
+    color: #9ca3af;
+  }
+
+  /* kafka rows */
+  .kafka-row {
+    display: grid;
+    grid-template-columns: 28px 54px 64px 1fr;
+    gap: 6px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    align-items: baseline;
+  }
+  .kafka-row:hover { background: color-mix(in oklab, var(--fg) 5%, transparent); }
+  .kafka-row.highlight { background: color-mix(in oklab, var(--accent) 10%, transparent); }
+  .kafka-row.new { color: var(--fg); }
+  .kp { color: var(--accent); font-weight: 600; }
+  .ko { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .kt { color: var(--subtle); font-variant-numeric: tabular-nums; font-size: 10.5px; }
+  .kv { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* redis */
+  .metric {
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: color-mix(in oklab, var(--bg) 60%, black);
+  }
+  .metric-v {
+    font-family: var(--font-mono);
+    font-size: 17px;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+  .metric-l {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--subtle);
+    margin-top: 2px;
+  }
+  .redis-row {
+    display: flex;
+    gap: 10px;
+    padding: 5px 8px;
+    border-radius: 6px;
+  }
+  .redis-row:hover { background: color-mix(in oklab, var(--fg) 5%, transparent); }
+  .redis-row .ch { color: var(--accent); flex-shrink: 0; }
+  .redis-row .msg { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* webhooks */
+  .wh-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 14px;
+  }
+  .wh-dot {
+    width: 8px; height: 8px; border-radius: 999px;
+    flex-shrink: 0;
+  }
+  .wh-dot.ok   { background: #22c55e; box-shadow: 0 0 0 3px color-mix(in oklab, #22c55e 20%, transparent); }
+  .wh-dot.warn { background: var(--warn); box-shadow: 0 0 0 3px color-mix(in oklab, var(--warn) 20%, transparent); }
+  .wh-dot.err  { background: var(--danger); box-shadow: 0 0 0 3px color-mix(in oklab, var(--danger) 20%, transparent); }
+  .wh-ep {
+    font-size: 12.5px;
+    color: var(--fg);
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .wh-url {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--subtle);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+  }
+  .wh-meta {
+    margin-top: 2px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--subtle);
+  }
+  .wh-status {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 3px 7px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+  .wh-status.ok   { color: #86efac; border-color: color-mix(in oklab, #22c55e 40%, var(--line)); }
+  .wh-status.warn { color: var(--warn); border-color: color-mix(in oklab, var(--warn) 40%, var(--line)); }
+  .wh-status.err  { color: var(--danger); border-color: color-mix(in oklab, var(--danger) 40%, var(--line)); }
+</style>

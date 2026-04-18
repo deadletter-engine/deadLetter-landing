@@ -1,0 +1,188 @@
+---
+const rows = [
+  { name: 'deadletter',      href: null,                                    email: true,  kafka: true,  redis: true,  webhooks: true,  price: 'Free · OSS',           self: true },
+  { name: 'Mailpit',         href: 'https://github.com/axllent/mailpit',    email: true,  kafka: false, redis: false, webhooks: false, price: 'Free' },
+  { name: 'MailHog',         href: 'https://github.com/mailhog/MailHog',    email: true,  kafka: false, redis: false, webhooks: false, price: 'Free · unmaintained' },
+  { name: 'MailCatcher',     href: 'https://mailcatcher.me',                email: true,  kafka: false, redis: false, webhooks: false, price: 'Free' },
+  { name: 'Mailtrap',        href: 'https://mailtrap.io',                   email: true,  kafka: false, redis: false, webhooks: false, price: 'Free tier · paid' },
+  { name: 'webhook.site',    href: 'https://webhook.site',                  email: false, kafka: false, redis: false, webhooks: true,  price: 'Free · paid' },
+  { name: 'Smee.io',         href: 'https://smee.io',                       email: false, kafka: false, redis: false, webhooks: true,  price: 'Free' },
+  { name: 'Hookdeck',        href: 'https://hookdeck.com',                  email: false, kafka: false, redis: false, webhooks: true,  price: 'Free tier · paid' },
+  { name: 'ngrok inspect',   href: 'https://ngrok.com',                     email: false, kafka: false, redis: false, webhooks: true,  price: 'Free · paid' },
+  { name: 'Kafka UI',        href: 'https://github.com/provectus/kafka-ui', email: false, kafka: true,  redis: false, webhooks: false, price: 'Free' },
+  { name: 'Redpanda Console',href: 'https://github.com/redpanda-data/console', email: false, kafka: true, redis: false, webhooks: false, price: 'Free · Enterprise' },
+  { name: 'AKHQ',            href: 'https://akhq.io',                       email: false, kafka: true,  redis: false, webhooks: false, price: 'Free' },
+  { name: 'Conduktor',       href: 'https://conduktor.io',                  email: false, kafka: true,  redis: false, webhooks: false, price: 'Free tier · paid' },
+  { name: 'RedisInsight',    href: 'https://redis.io/insight',              email: false, kafka: false, redis: true,  webhooks: false, price: 'Free' },
+  { name: 'Redis Commander', href: 'https://github.com/joeferner/redis-commander', email: false, kafka: false, redis: true, webhooks: false, price: 'Free' },
+];
+---
+<section id="compare" class="py-24 sm:py-32">
+  <div class="container-x">
+    <div class="max-w-2xl mb-12 reveal">
+      <div class="eyebrow mb-4"><span class="numeral">08 / comparison</span></div>
+      <h2 class="text-3xl sm:text-5xl tracking-[-0.025em] font-semibold">
+        The only tool that covers <br/>
+        <span style="color:var(--accent)">all four surfaces.</span>
+      </h2>
+      <p class="mt-5 text-[16px] leading-relaxed" style="color:var(--muted)">
+        Everyone else nails one protocol. deadletter collapses four into a
+        single local binary — SMTP, Kafka, Redis, webhooks — with no SaaS,
+        no signup, no telemetry.
+      </p>
+    </div>
+
+    <div class="card p-0 overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="cmp-table">
+          <thead>
+            <tr>
+              <th scope="col" class="cmp-th-tool">Tool</th>
+              <th scope="col"><span class="cmp-h"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="1.6"/><path d="m3 7 9 7 9-7" stroke="currentColor" stroke-width="1.6"/></svg>Email</span></th>
+              <th scope="col"><span class="cmp-h"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="18" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/><path d="m8 7 8 4M8 17l8-4" stroke="currentColor" stroke-width="1.6"/></svg>Kafka</span></th>
+              <th scope="col"><span class="cmp-h"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3" stroke="currentColor" stroke-width="1.6"/><path d="M4 6v12c0 1.66 3.58 3 8 3s8-1.34 8-3V6M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3" stroke="currentColor" stroke-width="1.6"/></svg>Redis</span></th>
+              <th scope="col"><span class="cmp-h"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2"/><path d="m6 17 3.13-5.78c.53-.97.1-2.18-.5-3.1a4 4 0 1 1 6.89-4.06"/><path d="m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8"/></svg>Webhooks</span></th>
+              <th scope="col" class="cmp-th-price">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr class={r.self ? 'cmp-self' : ''}>
+                <th scope="row" class="cmp-tool">
+                  {r.self && <span aria-hidden="true" class="cmp-emoji">&#128238;</span>}
+                  {r.href ? (
+                    <a href={r.href} rel="noopener noreferrer" target="_blank">{r.name}</a>
+                  ) : (
+                    <span class="cmp-self-name">{r.name}</span>
+                  )}
+                </th>
+                <td>{r.email    ? <span class="cmp-y" aria-label="yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> : <span class="cmp-n" aria-label="no">—</span>}</td>
+                <td>{r.kafka    ? <span class="cmp-y" aria-label="yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> : <span class="cmp-n" aria-label="no">—</span>}</td>
+                <td>{r.redis    ? <span class="cmp-y" aria-label="yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> : <span class="cmp-n" aria-label="no">—</span>}</td>
+                <td>{r.webhooks ? <span class="cmp-y" aria-label="yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> : <span class="cmp-n" aria-label="no">—</span>}</td>
+                <td class="cmp-price">{r.price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="mt-4 font-mono text-[11px]" style="color:var(--subtle)">
+      Scope: tools that replace at least one of deadletter's four surfaces. General-purpose tools (Postman, Wireshark, log aggregators) excluded.
+    </p>
+  </div>
+</section>
+
+<style>
+  .cmp-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13.5px;
+  }
+  .cmp-table th,
+  .cmp-table td {
+    padding: 14px 16px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  .cmp-table thead th {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    background: color-mix(in oklab, var(--bg-elev) 70%, transparent);
+    border-bottom-color: var(--line-strong);
+    position: sticky;
+    top: 0;
+  }
+  .cmp-table tbody tr:last-child th,
+  .cmp-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .cmp-table tbody tr:hover {
+    background: color-mix(in oklab, var(--fg) 3%, transparent);
+  }
+  .cmp-h {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+  }
+  .cmp-th-tool,
+  .cmp-tool {
+    text-align: left !important;
+    padding-left: 24px !important;
+  }
+  .cmp-tool {
+    font-weight: 500;
+    color: var(--fg);
+  }
+  .cmp-tool a {
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--line-strong);
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .cmp-tool a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .cmp-th-price,
+  .cmp-price {
+    text-align: right !important;
+    padding-right: 24px !important;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .cmp-y {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    color: #86efac;
+    background: color-mix(in oklab, #22c55e 16%, transparent);
+    border: 1px solid color-mix(in oklab, #22c55e 40%, var(--line));
+  }
+  .cmp-n {
+    color: var(--subtle);
+    font-family: var(--font-mono);
+  }
+
+  /* highlight row for deadletter */
+  .cmp-self {
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--accent) 10%, transparent),
+      color-mix(in oklab, var(--accent) 2%, transparent) 60%,
+      transparent
+    );
+    position: relative;
+  }
+  .cmp-self td,
+  .cmp-self th {
+    border-bottom-color: color-mix(in oklab, var(--accent) 30%, var(--line)) !important;
+  }
+  .cmp-self .cmp-tool,
+  .cmp-self .cmp-self-name {
+    color: var(--fg);
+    font-weight: 600;
+  }
+  .cmp-self .cmp-price {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .cmp-emoji {
+    display: inline-block;
+    margin-right: 6px;
+    font-size: 15px;
+    vertical-align: -2px;
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+---
+<section id="api" class="py-24 sm:py-32">
+  <div class="container-x">
+    <div class="max-w-2xl mb-12 reveal">
+      <div class="eyebrow mb-4"><span class="numeral">02 / clean api</span></div>
+      <h2 class="text-3xl sm:text-5xl tracking-[-0.025em] font-semibold">
+        Honest JSON. Honest streams.
+      </h2>
+      <p class="mt-5 text-[16px] leading-relaxed" style="color:var(--muted)">
+        Every view in the UI is backed by a documented HTTP endpoint and a
+        live SSE topic. Nothing is hidden, nothing is proprietary.
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-4">
+      <!-- HTTP API -->
+      <div class="card p-0">
+        <div class="flex items-center gap-2 px-4 py-3 border-b line">
+          <span class="tag accent">GET</span>
+          <code class="font-mono text-[12.5px]" style="color:var(--fg)">/api/emails/:id</code>
+          <span class="ml-auto font-mono text-[11px]" style="color:var(--subtle)">200 · application/json</span>
+        </div>
+<pre class="term-body text-[12.5px]"><span class="term-dim">// Full metadata + parsed MIME for one capture</span>
+<span class="term-info">&#123;</span>
+  <span style="color:var(--accent)">"id"</span>:         <span class="term-ok">"01HZX5A6QH7B0Q2F3TJ6PE8M7N"</span>,
+  <span style="color:var(--accent)">"from"</span>:       <span class="term-ok">"app@local"</span>,
+  <span style="color:var(--accent)">"to"</span>:         [<span class="term-ok">"alice@example.com"</span>],
+  <span style="color:var(--accent)">"subject"</span>:    <span class="term-ok">"Welcome to deadLetter"</span>,
+  <span style="color:var(--accent)">"receivedAt"</span>: <span class="term-ok">"2026-04-17T19:23:11Z"</span>,
+  <span style="color:var(--accent)">"size"</span>:       <span class="term-warn">4123</span>,
+  <span style="color:var(--accent)">"parts"</span>:      [<span class="term-ok">"text/plain"</span>, <span class="term-ok">"text/html"</span>],
+  <span style="color:var(--accent)">"duplicate"</span>:  <span class="term-warn">false</span>,
+  <span style="color:var(--accent)">"replayed"</span>:   <span class="term-warn">false</span>,
+  <span style="color:var(--accent)">"links"</span>: &#123;
+    <span style="color:var(--accent)">"raw"</span>:      <span class="term-ok">"/api/emails/01HZX…/raw"</span>,
+    <span style="color:var(--accent)">"html"</span>:     <span class="term-ok">"/api/emails/01HZX…/html"</span>,
+    <span style="color:var(--accent)">"text"</span>:     <span class="term-ok">"/api/emails/01HZX…/text"</span>
+  &#125;
+<span class="term-info">&#125;</span>
+</pre>
+      </div>
+
+      <!-- SSE -->
+      <div class="card p-0">
+        <div class="flex items-center gap-2 px-4 py-3 border-b line">
+          <span class="tag" style="color:#7dd3fc;border-color:color-mix(in oklab,#7dd3fc 40%,var(--line));background:color-mix(in oklab,#7dd3fc 8%,transparent)">STREAM</span>
+          <code class="font-mono text-[12.5px]" style="color:var(--fg)">/events/stream</code>
+          <span class="ml-auto flex items-center gap-1.5 font-mono text-[11px]" style="color:var(--subtle)">
+            <span class="live-dot" aria-hidden="true"></span> text/event-stream
+          </span>
+        </div>
+<pre class="term-body text-[12.5px]"><span class="term-dim">// Live backend events</span>
+event: <span style="color:var(--accent)">email.captured</span>
+data: <span class="term-ok">&#123;"id":"01HZX…","from":"app@local","size":4123&#125;</span>
+
+event: <span style="color:var(--accent)">email.duplicate</span>
+data: <span class="term-ok">&#123;"id":"01HZX…","within":"30s"&#125;</span>
+
+event: <span style="color:var(--accent)">webhook.delivered</span>
+data: <span class="term-ok">&#123;"endpoint":"dev-bot","status":200,"ms":47&#125;</span>
+
+event: <span style="color:var(--accent)">kafka.message</span>
+data: <span class="term-ok">&#123;"topic":"orders","partition":2,"offset":1407&#125;</span>
+
+event: <span style="color:var(--accent)">retention.swept</span>
+data: <span class="term-ok">&#123;"removed":14,"keep":"24h"&#125;</span>
+<span class="caret"></span>
+</pre>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,6 @@
+/* TEAM */
+Site: deadletter.app
+
+/* SITE */
+Stack: Astro, Tailwind CSS v4, Vercel
+Standards: HTML5, CSS3

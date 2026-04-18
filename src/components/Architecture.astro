@@ -1,0 +1,130 @@
+---
+---
+<section id="architecture" class="py-24 sm:py-32 relative">
+  <div class="container-x">
+    <div class="max-w-2xl mb-12 reveal">
+      <div class="eyebrow mb-4"><span class="numeral">03 / architecture</span></div>
+      <h2 class="text-3xl sm:text-5xl tracking-[-0.025em] font-semibold">
+        One binary.<br/>
+        One UI. <span style="color:var(--accent)">Many sources.</span>
+      </h2>
+      <p class="mt-5 text-[16px] leading-relaxed" style="color:var(--muted)">
+        A Go backend with a static Next.js UI baked in. Ingest SMTP, tail
+        Kafka, watch Redis — everything funnels through the same live SSE
+        bus, so the UI never lies about what the backend just saw.
+      </p>
+    </div>
+
+    <div class="card p-6 sm:p-10">
+      <!-- responsive flow diagram, CSS + SVG -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+        <!-- Sources -->
+        <div class="space-y-3">
+          <div class="numeral mb-1">sources</div>
+          <div class="rounded-xl border line px-4 py-3 flex items-center gap-3">
+            <span class="size-8 rounded-md border line grid place-items-center" style="color:var(--accent)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="1.6"/><path d="m3 7 9 7 9-7" stroke="currentColor" stroke-width="1.6"/></svg>
+            </span>
+            <div>
+              <div class="font-mono text-[13px]">your app</div>
+              <div class="font-mono text-[11px]" style="color:var(--muted)">SMTP → :1025</div>
+            </div>
+          </div>
+          <div class="rounded-xl border line px-4 py-3 flex items-center gap-3">
+            <span class="size-8 rounded-md border line grid place-items-center" style="color:var(--accent)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="6" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="18" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/><path d="m8 7 8 4M8 17l8-4" stroke="currentColor" stroke-width="1.6"/></svg>
+            </span>
+            <div>
+              <div class="font-mono text-[13px]">kafka broker</div>
+              <div class="font-mono text-[11px]" style="color:var(--muted)">SASL / PLAINTEXT</div>
+            </div>
+          </div>
+          <div class="rounded-xl border line px-4 py-3 flex items-center gap-3">
+            <span class="size-8 rounded-md border line grid place-items-center" style="color:var(--accent)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="6" rx="8" ry="3" stroke="currentColor" stroke-width="1.6"/><path d="M4 6v12c0 1.66 3.58 3 8 3s8-1.34 8-3V6" stroke="currentColor" stroke-width="1.6"/></svg>
+            </span>
+            <div>
+              <div class="font-mono text-[13px]">redis</div>
+              <div class="font-mono text-[11px]" style="color:var(--muted)">pub/sub · info · keys</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Core -->
+        <div class="relative">
+          <div class="numeral mb-1">deadletter core</div>
+          <div class="rounded-2xl border-2 line-strong p-5 h-full relative overflow-hidden"
+               style="background:linear-gradient(180deg,color-mix(in oklab,var(--accent) 6%,var(--bg-elev)),var(--bg-elev))">
+            <div class="flex items-center gap-2 mb-4">
+              <span aria-hidden="true" class="text-lg leading-none">&#128238;</span>
+              <div class="font-semibold">deadLetter</div>
+              <span class="tag accent ml-auto">Go</span>
+            </div>
+            <ul class="space-y-2 text-[13px] font-mono" style="color:var(--muted)">
+              <li class="flex items-center gap-2"><span class="size-1.5 rounded-full" style="background:var(--accent)"></span> SMTP sink + .eml store</li>
+              <li class="flex items-center gap-2"><span class="size-1.5 rounded-full" style="background:var(--accent)"></span> MIME parser + sanitizer</li>
+              <li class="flex items-center gap-2"><span class="size-1.5 rounded-full" style="background:var(--accent)"></span> in-memory index (rebuild on boot)</li>
+              <li class="flex items-center gap-2"><span class="size-1.5 rounded-full" style="background:var(--accent)"></span> kafka + redis clients</li>
+              <li class="flex items-center gap-2"><span class="size-1.5 rounded-full" style="background:var(--accent)"></span> retention scheduler</li>
+              <li class="flex items-center gap-2"><span class="size-1.5 rounded-full" style="background:var(--accent)"></span> webhook dispatcher</li>
+              <li class="flex items-center gap-2"><span class="size-1.5 rounded-full" style="background:var(--accent)"></span> SSE event bus</li>
+            </ul>
+
+            <!-- flowing connector lines — decorative -->
+            <svg class="hidden lg:block absolute -left-10 top-12" width="44" height="220" viewBox="0 0 44 220" aria-hidden="true">
+              <path class="flow" d="M0 30 H44" stroke="var(--accent)" stroke-width="1.5" fill="none"/>
+              <path class="flow" d="M0 110 H44" stroke="var(--accent)" stroke-width="1.5" fill="none"/>
+              <path class="flow" d="M0 190 H44" stroke="var(--accent)" stroke-width="1.5" fill="none"/>
+            </svg>
+            <svg class="hidden lg:block absolute -right-10 top-12" width="44" height="220" viewBox="0 0 44 220" aria-hidden="true">
+              <path class="flow" d="M0 30 H44" stroke="var(--accent)" stroke-width="1.5" fill="none"/>
+              <path class="flow" d="M0 110 H44" stroke="var(--accent)" stroke-width="1.5" fill="none"/>
+              <path class="flow" d="M0 190 H44" stroke="var(--accent)" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Consumers -->
+        <div class="space-y-3">
+          <div class="numeral mb-1">consumers</div>
+          <div class="rounded-xl border line px-4 py-3 flex items-center gap-3">
+            <span class="size-8 rounded-md border line grid place-items-center" style="color:var(--accent)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 20h8M12 18v2" stroke="currentColor" stroke-width="1.6"/></svg>
+            </span>
+            <div>
+              <div class="font-mono text-[13px]">web UI</div>
+              <div class="font-mono text-[11px]" style="color:var(--muted)">static next.js · served at /</div>
+            </div>
+          </div>
+          <div class="rounded-xl border line px-4 py-3 flex items-center gap-3">
+            <span class="size-8 rounded-md border line grid place-items-center" style="color:var(--accent)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </span>
+            <div>
+              <div class="font-mono text-[13px]">HTTP JSON API</div>
+              <div class="font-mono text-[11px]" style="color:var(--muted)">curl · scripts · bots</div>
+            </div>
+          </div>
+          <div class="rounded-xl border line px-4 py-3 flex items-center gap-3">
+            <span class="size-8 rounded-md border line grid place-items-center" style="color:var(--accent)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2"/><path d="m6 17 3.13-5.78c.53-.97.1-2.18-.5-3.1a4 4 0 1 1 6.89-4.06"/><path d="m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8"/></svg>
+            </span>
+            <div>
+              <div class="font-mono text-[13px]">webhooks</div>
+              <div class="font-mono text-[11px]" style="color:var(--muted)">signed · retried · logged</div>
+            </div>
+          </div>
+          <div class="rounded-xl border line px-4 py-3 flex items-center gap-3">
+            <span class="size-8 rounded-md border line grid place-items-center" style="color:var(--accent)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12h4l2-6 4 12 2-6h4" stroke="currentColor" stroke-width="1.6"/></svg>
+            </span>
+            <div>
+              <div class="font-mono text-[13px]">SSE stream</div>
+              <div class="font-mono text-[11px]" style="color:var(--muted)">/events/stream</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,85 @@
+---
+---
+<section id="ports" class="py-24 sm:py-32">
+  <div class="container-x grid lg:grid-cols-2 gap-6 reveal">
+    <div class="card p-0">
+      <header class="px-6 py-5 border-b line flex items-center justify-between">
+        <div>
+          <div class="eyebrow mb-2"><span class="numeral">05 / ports</span></div>
+          <h3 class="text-xl font-semibold tracking-tight">Default ports</h3>
+        </div>
+        <span class="tag">overridable via env</span>
+      </header>
+      <ul class="divide-y line font-mono text-[13px]">
+        <li class="flex items-center gap-4 px-6 py-4">
+          <span class="tag accent shrink-0">:1025</span>
+          <div class="flex-1">
+            <div style="color:var(--fg)">SMTP sink</div>
+            <div class="text-[11px]" style="color:var(--muted)">point your app here</div>
+          </div>
+        </li>
+        <li class="flex items-center gap-4 px-6 py-4">
+          <span class="tag shrink-0">:8025</span>
+          <div class="flex-1">
+            <div style="color:var(--fg)">HTTP API + UI</div>
+            <div class="text-[11px]" style="color:var(--muted)">JSON endpoints, SSE, static UI</div>
+          </div>
+        </li>
+        <li class="flex items-center gap-4 px-6 py-4">
+          <span class="tag shrink-0">:9092</span>
+          <div class="flex-1">
+            <div style="color:var(--fg)">Kafka (compose)</div>
+            <div class="text-[11px]" style="color:var(--muted)">optional — only in full stack</div>
+          </div>
+        </li>
+        <li class="flex items-center gap-4 px-6 py-4">
+          <span class="tag shrink-0">:8081</span>
+          <div class="flex-1">
+            <div style="color:var(--fg)">Schema Registry</div>
+            <div class="text-[11px]" style="color:var(--muted)">optional — only in full stack</div>
+          </div>
+        </li>
+        <li class="flex items-center gap-4 px-6 py-4">
+          <span class="tag shrink-0">:6379</span>
+          <div class="flex-1">
+            <div style="color:var(--fg)">Redis (compose)</div>
+            <div class="text-[11px]" style="color:var(--muted)">optional — only in full stack</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card p-0">
+      <header class="px-6 py-5 border-b line">
+        <div class="eyebrow mb-2"><span class="numeral">06 / ui routes</span></div>
+        <h3 class="text-xl font-semibold tracking-tight">UI surfaces</h3>
+      </header>
+      <ul class="divide-y line font-mono text-[13px]">
+        <li class="flex items-center gap-4 px-6 py-4">
+          <code class="shrink-0 tag">/</code>
+          <div class="flex-1"><div style="color:var(--fg)">Dashboard</div><div class="text-[11px]" style="color:var(--muted)">counts, live feed, recent captures</div></div>
+        </li>
+        <li class="flex items-center gap-4 px-6 py-4">
+          <code class="shrink-0 tag">/inbox</code>
+          <div class="flex-1"><div style="color:var(--fg)">Inbox</div><div class="text-[11px]" style="color:var(--muted)">searchable list · raw · rendered · MIME</div></div>
+        </li>
+        <li class="flex items-center gap-4 px-6 py-4">
+          <code class="shrink-0 tag">/kafka</code>
+          <div class="flex-1"><div style="color:var(--fg)">Kafka workspace</div><div class="text-[11px]" style="color:var(--muted)">brokers · topics · tail · consumer groups</div></div>
+        </li>
+        <li class="flex items-center gap-4 px-6 py-4">
+          <code class="shrink-0 tag">/redis</code>
+          <div class="flex-1"><div style="color:var(--fg)">Redis workspace</div><div class="text-[11px]" style="color:var(--muted)">pub/sub · channels · keys · info</div></div>
+        </li>
+        <li class="flex items-center gap-4 px-6 py-4">
+          <code class="shrink-0 tag accent">/webhooks</code>
+          <div class="flex-1"><div style="color:var(--fg)">Webhooks</div><div class="text-[11px]" style="color:var(--muted)">endpoints · signatures · delivery logs</div></div>
+        </li>
+        <li class="flex items-center gap-4 px-6 py-4">
+          <code class="shrink-0 tag">/settings</code>
+          <div class="flex-1"><div style="color:var(--fg)">Settings</div><div class="text-[11px]" style="color:var(--muted)">retention · replay · theme · sound</div></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

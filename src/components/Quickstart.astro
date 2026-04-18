@@ -1,0 +1,589 @@
+---
+---
+<section id="quickstart" class="py-24 sm:py-32">
+  <div class="container-x">
+    <div class="max-w-2xl mb-12 reveal">
+      <div class="eyebrow mb-4"><span class="numeral">04 / quickstart</span></div>
+      <h2 class="text-3xl sm:text-5xl tracking-[-0.025em] font-semibold">
+        Pick a path.<br/>
+        <span style="color:var(--accent)">Ship in a minute.</span>
+      </h2>
+      <p class="mt-5 text-[16px] leading-relaxed" style="color:var(--muted)">
+        From a one-line Docker pull to a full Kafka + Redis stack —
+        plus a Homebrew formula landing soon. Copy, paste, done.
+      </p>
+    </div>
+
+    <!-- prerequisites strip -->
+    <div class="qs-prereq mb-6">
+      <span class="qs-prereq-label">prerequisites</span>
+      <span class="qs-prereq-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Docker 20+</span>
+      <span class="qs-prereq-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> port <code>1025</code> free</span>
+      <span class="qs-prereq-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> port <code>8025</code> free</span>
+      <span class="qs-prereq-item qs-opt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/></svg> Kafka / Redis (optional)</span>
+    </div>
+
+    <div class="tabs card p-0 qs-card">
+      <input type="radio" name="qs" id="tab-hub" checked />
+      <input type="radio" name="qs" id="tab-stack" />
+      <input type="radio" name="qs" id="tab-brew" />
+      <input type="radio" name="qs" id="tab-source" />
+
+      <nav class="flex items-center gap-0 px-3 pt-3 overflow-x-auto" aria-label="Quickstart paths">
+        <label for="tab-hub"    class="tab-label"><span class="qs-tab-ico">&#128051;</span>Docker</label>
+        <label for="tab-stack"  class="tab-label"><span class="qs-tab-ico">&#9889;</span>Kafka &amp; Redis</label>
+        <label for="tab-brew"   class="tab-label"><span class="qs-tab-ico">&#127866;</span>Homebrew<span class="ml-1.5 tag qs-soon">soon</span></label>
+        <label for="tab-source" class="tab-label"><span class="qs-tab-ico">&#9881;</span>From source</label>
+        <span class="flex-1 border-b line self-end h-px"></span>
+      </nav>
+
+      <!-- DOCKER -->
+      <div class="panel hub">
+        <div class="term-head">
+          <span class="term-dot" style="background:#ef4444"></span>
+          <span class="term-dot" style="background:#eab308"></span>
+          <span class="term-dot" style="background:#22c55e"></span>
+          <span class="ml-3 font-mono text-[11px]" style="color:var(--muted)">fastest · two commands · ~45s</span>
+          <button type="button" class="qs-copy" data-copy="docker-basic" aria-label="Copy Docker commands">
+            <svg class="qs-copy-i" width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" stroke="currentColor" stroke-width="1.6"/></svg>
+            <svg class="qs-copy-ok" width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="qs-copy-t">copy</span>
+          </button>
+        </div>
+<pre class="term-body text-[13.5px]" data-copy-source="docker-basic"><span class="term-prompt">$</span> docker pull peixotomdb/deadletter:latest
+
+<span class="term-prompt">$</span> docker run -d \
+    --name deadletter \
+    -p 1025:1025 -p 8025:8025 \
+    -v "$PWD/data:/data" \
+    peixotomdb/deadletter:latest
+
+<span class="term-dim"># UI &amp; API  → http://localhost:8025</span>
+<span class="term-dim"># SMTP sink → localhost:1025</span>
+</pre>
+        <div class="qs-verify">
+          <div class="qs-verify-head">
+            <span class="qs-step-dot">2</span>
+            <span>Verify it's alive</span>
+          </div>
+<pre class="qs-verify-body"><span class="term-prompt">$</span> curl -s localhost:8025/api/health
+<span class="term-ok">&#123;"status":"ok","version":"1.2.0","smtp":"1025","uptime":"3s"&#125;</span></pre>
+        </div>
+      </div>
+
+      <!-- KAFKA + REDIS -->
+      <div class="panel stack">
+        <div class="term-head">
+          <span class="term-dot" style="background:#ef4444"></span>
+          <span class="term-dot" style="background:#eab308"></span>
+          <span class="term-dot" style="background:#22c55e"></span>
+          <span class="ml-3 font-mono text-[11px]" style="color:var(--muted)">full stack · point at broker + redis</span>
+          <button type="button" class="qs-copy" data-copy="docker-stack" aria-label="Copy Docker stack command">
+            <svg class="qs-copy-i" width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" stroke="currentColor" stroke-width="1.6"/></svg>
+            <svg class="qs-copy-ok" width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="qs-copy-t">copy</span>
+          </button>
+        </div>
+<pre class="term-body text-[13.5px]" data-copy-source="docker-stack"><span class="term-prompt">$</span> docker run -d \
+    --name deadletter \
+    -p 1025:1025 -p 8025:8025 \
+    -v "$PWD/data:/data" \
+    -e KAFKA_BROKERS=host.docker.internal:9092 \
+    -e SCHEMA_REGISTRY_URL=http://host.docker.internal:8081 \
+    -e REDIS_ADDR=host.docker.internal:6379 \
+    peixotomdb/deadletter:latest
+
+<span class="term-dim"># Kafka topics, consumers &amp; schemas show up in /kafka</span>
+<span class="term-dim"># Redis keys &amp; pub/sub channels show up in /redis</span>
+</pre>
+        <div class="qs-envtable">
+          <div class="qs-envtable-head">
+            <span>env var</span>
+            <span>default</span>
+            <span>notes</span>
+          </div>
+          <div class="qs-envrow"><code>KAFKA_BROKERS</code><code>—</code><span>comma-sep list · SASL supported</span></div>
+          <div class="qs-envrow"><code>SCHEMA_REGISTRY_URL</code><code>—</code><span>optional · enables Avro decoding</span></div>
+          <div class="qs-envrow"><code>REDIS_ADDR</code><code>—</code><span>single node · <code>user:pass@host</code> ok</span></div>
+          <div class="qs-envrow"><code>REPLAY_ENABLED</code><code>false</code><span>opt-in SMTP re-send</span></div>
+          <div class="qs-envrow"><code>RETENTION</code><code>24h</code><span>Go duration string</span></div>
+        </div>
+      </div>
+
+      <!-- HOMEBREW -->
+      <div class="panel brew">
+        <div class="term-head">
+          <span class="term-dot" style="background:#ef4444"></span>
+          <span class="term-dot" style="background:#eab308"></span>
+          <span class="term-dot" style="background:#22c55e"></span>
+          <span class="ml-3 font-mono text-[11px]" style="color:var(--muted)">coming soon · native macOS binary</span>
+          <button type="button" class="qs-copy" data-copy="brew-cmd" aria-label="Copy brew install">
+            <svg class="qs-copy-i" width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" stroke="currentColor" stroke-width="1.6"/></svg>
+            <svg class="qs-copy-ok" width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="qs-copy-t">copy</span>
+          </button>
+        </div>
+<pre class="term-body text-[13.5px]" data-copy-source="brew-cmd"><span class="term-dim"># formula in review — expected in the next release</span>
+<span class="term-prompt">$</span> brew install peixotomdb/tap/deadletter
+
+<span class="term-prompt">$</span> deadletter
+<span class="term-dim">▸ SMTP sink   listening on :1025</span>
+<span class="term-dim">▸ HTTP API    listening on :8025</span>
+<span class="term-dim">▸ data dir    ~/Library/Application Support/deadletter</span>
+
+<span class="term-prompt">$</span> <span class="term-ok">deadletter --help</span>  <span class="term-dim"># CLI mirrors the REST API</span>
+</pre>
+        <div class="qs-waitlist">
+          <div class="qs-waitlist-head">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="1.6"/><path d="m3 7 9 7 9-7" stroke="currentColor" stroke-width="1.6"/></svg>
+            <span>Get pinged when the formula lands</span>
+          </div>
+          <a class="qs-waitlist-cta" href="https://github.com/peixotomdb/deadletter/issues/new?title=Homebrew+waitlist" target="_blank" rel="noopener noreferrer">
+            Open issue →
+          </a>
+        </div>
+      </div>
+
+      <!-- FROM SOURCE -->
+      <div class="panel source">
+        <div class="term-head">
+          <span class="term-dot" style="background:#ef4444"></span>
+          <span class="term-dot" style="background:#eab308"></span>
+          <span class="term-dot" style="background:#22c55e"></span>
+          <span class="ml-3 font-mono text-[11px]" style="color:var(--muted)">go 1.22 · pnpm 9 · make</span>
+          <button type="button" class="qs-copy" data-copy="source-cmd" aria-label="Copy source build">
+            <svg class="qs-copy-i" width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" stroke="currentColor" stroke-width="1.6"/></svg>
+            <svg class="qs-copy-ok" width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="qs-copy-t">copy</span>
+          </button>
+        </div>
+<pre class="term-body text-[13.5px]" data-copy-source="source-cmd"><span class="term-prompt">$</span> git clone https://github.com/peixotomdb/deadletter.git
+<span class="term-prompt">$</span> cd deadletter-ui &amp;&amp; pnpm install &amp;&amp; pnpm build
+<span class="term-prompt">$</span> cd .. &amp;&amp; go build -o deadletter ./cmd/deadletter
+<span class="term-prompt">$</span> ./deadletter
+
+<span class="term-dim"># or live UI + backend dev</span>
+<span class="term-prompt">$</span> make dev
+</pre>
+      </div>
+    </div>
+
+    <!-- next steps -->
+    <div class="qs-next mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <a class="qs-next-card" href="#ui">
+        <div class="qs-next-num">01</div>
+        <div class="qs-next-title">Open the UI</div>
+        <div class="qs-next-sub"><code>localhost:8025</code> — dashboard, inbox, live feed</div>
+        <span class="qs-next-arrow">→</span>
+      </a>
+      <a class="qs-next-card" href="#api">
+        <div class="qs-next-num">02</div>
+        <div class="qs-next-title">Point your app</div>
+        <div class="qs-next-sub">SMTP host <code>localhost:1025</code> — no auth, no TLS</div>
+        <span class="qs-next-arrow">→</span>
+      </a>
+      <a class="qs-next-card" href="#safety">
+        <div class="qs-next-num">03</div>
+        <div class="qs-next-title">Wire webhooks</div>
+        <div class="qs-next-sub">Fan out events with signed, retried HTTP calls</div>
+        <span class="qs-next-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- troubleshooting -->
+    <details class="qs-trouble mt-6">
+      <summary>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7M12 17h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span>Something broke?</span>
+        <span class="qs-trouble-chev" aria-hidden="true">▸</span>
+      </summary>
+      <div class="qs-trouble-body">
+        <div class="qs-trouble-row">
+          <code>Error: bind: address already in use</code>
+          <span>Another tool (MailHog? Mailpit?) holds <code>1025</code>/<code>8025</code>. Map different host ports: <code>-p 2525:1025 -p 18025:8025</code>.</span>
+        </div>
+        <div class="qs-trouble-row">
+          <code>connection refused · host.docker.internal</code>
+          <span>Linux hosts need <code>--add-host=host.docker.internal:host-gateway</code>. Docker Desktop resolves it automatically.</span>
+        </div>
+        <div class="qs-trouble-row">
+          <code>No events in UI</code>
+          <span>Check <code>curl localhost:8025/events/stream</code> returns. If yes, your app is silent — verify SMTP host, not firewall.</span>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const btns = document.querySelectorAll('.qs-copy');
+    btns.forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const key = btn.getAttribute('data-copy');
+        const src = document.querySelector(`[data-copy-source="${key}"]`);
+        if (!src) return;
+        const text = (src.textContent ?? '').trim();
+        try {
+          await navigator.clipboard.writeText(text);
+          btn.classList.add('copied');
+          const t = btn.querySelector('.qs-copy-t');
+          if (t) t.textContent = 'copied';
+          setTimeout(() => {
+            btn.classList.remove('copied');
+            if (t) t.textContent = 'copy';
+          }, 1600);
+        } catch (_) {
+          // ignore
+        }
+      });
+    });
+  })();
+</script>
+
+<style>
+  .qs-card { position: relative; }
+
+  /* prereqs */
+  .qs-prereq {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    padding: 10px 14px;
+    border: 1px dashed var(--line);
+    border-radius: 12px;
+    background: color-mix(in oklab, var(--bg-elev) 50%, transparent);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  .qs-prereq-label {
+    padding-right: 12px;
+    border-right: 1px solid var(--line);
+    color: var(--subtle);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+  .qs-prereq-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--fg);
+  }
+  .qs-prereq-item svg { color: #22c55e; }
+  .qs-prereq-item code {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+  .qs-prereq-item.qs-opt { color: var(--muted); }
+  .qs-prereq-item.qs-opt svg { color: var(--subtle); }
+
+  .qs-soon {
+    font-size: 9.5px;
+    padding: 0 5px;
+    color: var(--accent);
+    border-color: color-mix(in oklab, var(--accent) 45%, var(--line));
+  }
+  .qs-tab-ico {
+    margin-right: 6px;
+    font-size: 12px;
+    line-height: 1;
+  }
+
+  /* copy button */
+  .qs-copy {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 7px;
+    border: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg) 60%, transparent);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease, transform 0.1s ease, background 0.15s ease;
+  }
+  .qs-copy:hover {
+    color: var(--fg);
+    border-color: var(--line-strong);
+    background: color-mix(in oklab, var(--bg-elev) 70%, transparent);
+  }
+  .qs-copy:active { transform: translateY(1px); }
+  .qs-copy .qs-copy-ok { display: none; color: #22c55e; }
+  .qs-copy.copied {
+    color: #86efac;
+    border-color: color-mix(in oklab, #22c55e 50%, var(--line));
+    background: color-mix(in oklab, #22c55e 10%, transparent);
+  }
+  .qs-copy.copied .qs-copy-i { display: none; }
+  .qs-copy.copied .qs-copy-ok {
+    display: inline-block;
+    animation: qs-tick 0.35s ease-out;
+  }
+  @keyframes qs-tick {
+    0%   { transform: scale(0.5); opacity: 0; }
+    60%  { transform: scale(1.25); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  /* verify block */
+  .qs-verify {
+    margin: 0 14px 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: color-mix(in oklab, var(--bg) 40%, transparent);
+    overflow: hidden;
+  }
+  .qs-verify-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--line);
+    font-size: 12.5px;
+    color: var(--fg);
+    background: color-mix(in oklab, var(--bg-elev) 60%, transparent);
+  }
+  .qs-step-dot {
+    display: inline-flex;
+    width: 18px; height: 18px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #0b0a09;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+  }
+  .qs-verify-body {
+    padding: 12px 14px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    color: var(--fg);
+  }
+
+  /* env vars table */
+  .qs-envtable {
+    margin: 0 14px 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+  }
+  .qs-envtable-head,
+  .qs-envrow {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr 2fr;
+    gap: 10px;
+    padding: 8px 12px;
+    align-items: center;
+  }
+  .qs-envtable-head {
+    background: color-mix(in oklab, var(--bg-elev) 60%, transparent);
+    border-bottom: 1px solid var(--line);
+    color: var(--subtle);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+  .qs-envrow {
+    border-bottom: 1px solid color-mix(in oklab, var(--line) 70%, transparent);
+    color: var(--muted);
+    transition: background 0.15s ease;
+  }
+  .qs-envrow:last-child { border-bottom: 0; }
+  .qs-envrow:hover { background: color-mix(in oklab, var(--accent) 5%, transparent); }
+  .qs-envrow > code { color: var(--fg); }
+  .qs-envrow span code {
+    color: var(--accent);
+    font-size: 10.5px;
+    padding: 0 3px;
+    background: color-mix(in oklab, var(--accent) 10%, transparent);
+    border-radius: 3px;
+  }
+  @media (max-width: 640px) {
+    .qs-envtable-head,
+    .qs-envrow { grid-template-columns: 1fr; gap: 4px; }
+    .qs-envtable-head { display: none; }
+  }
+
+  /* waitlist strip */
+  .qs-waitlist {
+    margin: 0 14px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border: 1px solid color-mix(in oklab, var(--accent) 35%, var(--line));
+    border-radius: 10px;
+    background: color-mix(in oklab, var(--accent) 6%, transparent);
+  }
+  .qs-waitlist-head {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 12.5px;
+    color: var(--fg);
+    flex: 1;
+    min-width: 0;
+  }
+  .qs-waitlist-head svg { color: var(--accent); flex-shrink: 0; }
+  .qs-waitlist-cta {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--accent);
+    padding: 4px 10px;
+    border-radius: 7px;
+    border: 1px solid color-mix(in oklab, var(--accent) 45%, var(--line));
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .qs-waitlist-cta:hover {
+    background: color-mix(in oklab, var(--accent) 14%, transparent);
+    transform: translateX(2px);
+  }
+
+  /* next steps */
+  .qs-next-card {
+    position: relative;
+    display: block;
+    padding: 18px 18px 20px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: color-mix(in oklab, var(--bg-elev) 70%, transparent);
+    transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+    overflow: hidden;
+  }
+  .qs-next-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(140deg, transparent 40%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 85%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .qs-next-card:hover {
+    border-color: color-mix(in oklab, var(--accent) 35%, var(--line-strong));
+    transform: translateY(-3px);
+    background: var(--bg-elev);
+  }
+  .qs-next-card:hover::after { opacity: 1; }
+  .qs-next-card:hover .qs-next-arrow { transform: translateX(5px); color: var(--accent); }
+  .qs-next-num {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    color: var(--subtle);
+    text-transform: uppercase;
+  }
+  .qs-next-title {
+    margin-top: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--fg);
+  }
+  .qs-next-sub {
+    margin-top: 4px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .qs-next-sub code {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    padding: 0 4px;
+    background: color-mix(in oklab, var(--accent) 10%, transparent);
+    border-radius: 4px;
+  }
+  .qs-next-arrow {
+    position: absolute;
+    right: 16px;
+    bottom: 14px;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--subtle);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  /* troubleshooting */
+  .qs-trouble {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: color-mix(in oklab, var(--bg-elev) 50%, transparent);
+    overflow: hidden;
+  }
+  .qs-trouble summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 13.5px;
+    color: var(--fg);
+    list-style: none;
+    user-select: none;
+    transition: background 0.15s ease;
+  }
+  .qs-trouble summary::-webkit-details-marker { display: none; }
+  .qs-trouble summary:hover { background: color-mix(in oklab, var(--fg) 4%, transparent); }
+  .qs-trouble summary svg { color: var(--accent); }
+  .qs-trouble-chev {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--subtle);
+    transition: transform 0.25s ease;
+  }
+  .qs-trouble[open] .qs-trouble-chev { transform: rotate(90deg); }
+  .qs-trouble-body {
+    padding: 4px 16px 16px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    gap: 12px;
+  }
+  .qs-trouble-row {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 12.5px;
+  }
+  .qs-trouble-row:last-child { border-bottom: 0; }
+  .qs-trouble-row > code {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--warn);
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: color-mix(in oklab, var(--warn) 8%, transparent);
+    border: 1px solid color-mix(in oklab, var(--warn) 30%, var(--line));
+    width: max-content;
+    max-width: 100%;
+    align-self: start;
+  }
+  .qs-trouble-row span { color: var(--muted); line-height: 1.55; }
+  .qs-trouble-row span code {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    padding: 1px 5px;
+    color: var(--fg);
+    background: color-mix(in oklab, var(--bg) 50%, transparent);
+    border-radius: 4px;
+  }
+  @media (max-width: 720px) {
+    .qs-trouble-row { grid-template-columns: 1fr; gap: 6px; }
+  }
+</style>

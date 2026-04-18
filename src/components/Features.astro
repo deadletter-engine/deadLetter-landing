@@ -1,0 +1,285 @@
+---
+---
+<section id="features" class="py-24 sm:py-32">
+  <div class="container-x">
+    <div class="flex items-end justify-between gap-6 mb-12 reveal">
+      <div class="max-w-2xl">
+        <div class="eyebrow mb-4">
+          <span class="numeral">01 / features</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl tracking-[-0.025em] font-semibold">
+          Everything your messages touch,<br/>
+          <span style="color:var(--accent)">in one cockpit.</span>
+        </h2>
+        <p class="mt-5 text-[16px] leading-relaxed" style="color:var(--muted)">
+          Watch SMTP, tail Kafka, poke at Redis, fire webhooks — from one
+          UI, one API, one binary. Built for the two places production
+          doesn't want you: <span style="color:var(--fg)">your laptop</span> and <span style="color:var(--fg)">CI</span>.
+        </p>
+      </div>
+    </div>
+
+    <!-- BENTO GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
+      <!-- SMTP capture — large -->
+      <article class="feat md:col-span-4 md:row-span-2">
+        <div class="flex items-center justify-between mb-5">
+          <div class="flex items-center gap-3">
+            <div class="size-9 rounded-lg border line flex items-center justify-center" style="background:color-mix(in oklab,var(--accent) 12%,transparent);color:var(--accent)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="1.6"/><path d="m3 7 9 7 9-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <h3 class="text-[17px] font-semibold tracking-tight">SMTP capture</h3>
+              <p class="text-[12px] font-mono" style="color:var(--muted)">:1025 · raw .eml + JSON</p>
+            </div>
+          </div>
+          <span class="tag accent">Core</span>
+        </div>
+
+        <p class="text-[14.5px] leading-relaxed max-w-lg" style="color:var(--muted)">
+          Point your app at <code class="font-mono text-[13px]" style="color:var(--fg)">localhost:1025</code>. deadLetter accepts the
+          message, persists the raw envelope, extracts headers and MIME
+          parts, and rebuilds its index on boot so captures survive restarts.
+        </p>
+
+        <!-- mock inbox -->
+        <div class="mt-7 rounded-xl border line overflow-hidden" style="background:color-mix(in oklab,var(--bg) 60%,black)">
+          <div class="flex items-center gap-2 px-3 py-2 border-b line">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span class="font-mono text-[11px]" style="color:var(--muted)">inbox · 3 new</span>
+            <span class="ml-auto font-mono text-[11px]" style="color:var(--subtle)">⌘K</span>
+          </div>
+          <ul class="divide-y line text-[13px] font-mono">
+            <li class="flex items-center gap-3 px-3 py-2.5">
+              <span class="size-1.5 rounded-full" style="background:var(--accent)" aria-hidden="true"></span>
+              <span style="color:var(--fg)" class="truncate flex-1">Welcome to deadLetter</span>
+              <span style="color:var(--subtle)" class="shrink-0">app@local</span>
+              <span style="color:var(--subtle)" class="shrink-0 tabular-nums">19:23</span>
+            </li>
+            <li class="flex items-center gap-3 px-3 py-2.5">
+              <span class="size-1.5 rounded-full" style="background:var(--info)" aria-hidden="true"></span>
+              <span style="color:var(--fg)" class="truncate flex-1">[CI] build #1247 passed</span>
+              <span style="color:var(--subtle)" class="shrink-0">ci@runner</span>
+              <span style="color:var(--subtle)" class="shrink-0 tabular-nums">19:22</span>
+            </li>
+            <li class="flex items-center gap-3 px-3 py-2.5">
+              <span class="size-1.5 rounded-full" style="background:var(--warn)" aria-hidden="true"></span>
+              <span style="color:var(--fg)" class="truncate flex-1">Possible duplicate · password reset</span>
+              <span style="color:var(--subtle)" class="shrink-0">auth@svc</span>
+              <span style="color:var(--subtle)" class="shrink-0 tabular-nums">19:21</span>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- HTML sandbox -->
+      <article class="feat md:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="size-9 rounded-lg border line flex items-center justify-center" style="color:var(--accent)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 8h18M8 4v4" stroke="currentColor" stroke-width="1.6"/></svg>
+          </div>
+          <h3 class="text-[15px] font-semibold">HTML sandbox</h3>
+        </div>
+        <p class="text-[13.5px] leading-relaxed" style="color:var(--muted)">
+          Render sanitized HTML previews safely while keeping the original
+          raw source untouched on disk.
+        </p>
+        <div class="mt-4 font-mono text-[11px] flex gap-1" style="color:var(--subtle)">
+          <span class="tag">raw</span>
+          <span class="tag">rendered</span>
+          <span class="tag">text</span>
+        </div>
+      </article>
+
+      <!-- Webhooks (NEW) -->
+      <article class="feat md:col-span-2" style="border-color:color-mix(in oklab,var(--accent) 50%,var(--line))">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-3">
+            <div class="size-9 rounded-lg border line flex items-center justify-center feat-ico" style="background:color-mix(in oklab,var(--accent) 16%,transparent);color:var(--accent)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2"/><path d="m6 17 3.13-5.78c.53-.97.1-2.18-.5-3.1a4 4 0 1 1 6.89-4.06"/><path d="m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8"/></svg>
+            </div>
+            <h3 class="text-[15px] font-semibold">Webhooks</h3>
+          </div>
+          <span class="tag new"></span>
+        </div>
+        <p class="text-[13.5px] leading-relaxed" style="color:var(--muted)">
+          Fan out captured events to HTTP endpoints with retries, HMAC
+          signatures, and delivery logs.
+        </p>
+        <div class="mt-4 font-mono text-[11px] flex items-center gap-2" style="color:var(--muted)">
+          <span class="tag accent" style="font-size:10px">POST</span>
+          <code style="color:var(--fg)">/api/webhooks</code>
+          <span class="wh-travel" aria-hidden="true"></span>
+        </div>
+      </article>
+
+      <!-- Kafka -->
+      <article class="feat md:col-span-3">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="size-9 rounded-lg border line flex items-center justify-center" style="color:var(--accent)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="6" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="18" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/><path d="m8 7 8 4M8 17l8-4" stroke="currentColor" stroke-width="1.6"/></svg>
+          </div>
+          <h3 class="text-[15px] font-semibold">Kafka observability</h3>
+        </div>
+        <p class="text-[13.5px] leading-relaxed" style="color:var(--muted)">
+          Brokers, topics, partitions, consumer groups, offsets. Tail a
+          partition, reset a group, manage topics, and deserialize
+          Confluent wire-format with Schema Registry integration.
+        </p>
+        <div class="mt-4 flex flex-wrap gap-1.5">
+          <span class="tag">brokers</span>
+          <span class="tag">topics</span>
+          <span class="tag">tail</span>
+          <span class="tag">offsets</span>
+          <span class="tag">schemas</span>
+        </div>
+      </article>
+
+      <!-- Redis -->
+      <article class="feat md:col-span-3">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="size-9 rounded-lg border line flex items-center justify-center" style="color:var(--accent)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="6" rx="8" ry="3" stroke="currentColor" stroke-width="1.6"/><path d="M4 6v12c0 1.66 3.58 3 8 3s8-1.34 8-3V6M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3" stroke="currentColor" stroke-width="1.6"/></svg>
+          </div>
+          <h3 class="text-[15px] font-semibold">Redis tools</h3>
+        </div>
+        <p class="text-[13.5px] leading-relaxed" style="color:var(--muted)">
+          Pub/Sub monitoring, live channel subscriptions over SSE, server
+          info, key discovery, and DB usage — all from the same UI.
+        </p>
+        <div class="mt-4 flex flex-wrap gap-1.5">
+          <span class="tag">pub/sub</span>
+          <span class="tag">channels</span>
+          <span class="tag">keys</span>
+          <span class="tag">info</span>
+        </div>
+      </article>
+
+      <!-- Replay -->
+      <article class="feat md:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="size-9 rounded-lg border line flex items-center justify-center" style="color:var(--accent)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7L3 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 3v5h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="text-[15px] font-semibold">Replay, opt-in</h3>
+        </div>
+        <p class="text-[13.5px] leading-relaxed" style="color:var(--muted)">
+          Re-send a captured message to a real SMTP target only when you
+          explicitly enable it. Zero surprises.
+        </p>
+      </article>
+
+      <!-- Retention -->
+      <article class="feat md:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="size-9 rounded-lg border line flex items-center justify-center" style="color:var(--accent)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="text-[15px] font-semibold">Retention</h3>
+        </div>
+        <p class="text-[13.5px] leading-relaxed" style="color:var(--muted)">
+          Keep messages for a configurable window. Scheduled or manual
+          cleanup. Disk never surprises you.
+        </p>
+      </article>
+
+      <!-- SSE live -->
+      <article class="feat md:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="size-9 rounded-lg border line flex items-center justify-center" style="color:var(--accent)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12h4l2-6 4 12 2-6h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="text-[15px] font-semibold">Live SSE</h3>
+        </div>
+        <p class="text-[13.5px] leading-relaxed" style="color:var(--muted)">
+          The UI streams backend events — email, replay, retention, Kafka,
+          webhooks — so what you see is what just happened.
+        </p>
+      </article>
+
+      <!-- CLI -->
+      <article class="feat md:col-span-3">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="size-9 rounded-lg border line flex items-center justify-center" style="color:var(--accent)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="m7 10 3 2-3 2M13 14h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="text-[15px] font-semibold">deadletterctl</h3>
+        </div>
+        <p class="text-[13.5px] leading-relaxed" style="color:var(--muted)">
+          List, show, replay, and export captured emails from a bundled
+          CLI. Friendly to automation, CI, and muscle memory.
+        </p>
+        <pre class="mt-4 font-mono text-[12px] px-3 py-2 rounded-lg border line" style="color:var(--muted);background:color-mix(in oklab,var(--bg) 70%,black)"><span style="color:var(--accent)">$</span> deadletterctl replay 01HZX… --to qa@internal</pre>
+      </article>
+
+      <!-- Duplicate detection -->
+      <article class="feat md:col-span-3">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="size-9 rounded-lg border line flex items-center justify-center" style="color:var(--accent)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/></svg>
+          </div>
+          <h3 class="text-[15px] font-semibold">Duplicate detection</h3>
+        </div>
+        <p class="text-[13.5px] leading-relaxed" style="color:var(--muted)">
+          deadLetter flags likely repeats based on sender + subject within a
+          short window, so misbehaving workers stop hiding.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* icon hover breathe on every feature card */
+  .feat svg { transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .feat:hover svg { transform: scale(1.1) rotate(-3deg); }
+
+  /* webhook pulse icon */
+  .feat-ico {
+    position: relative;
+  }
+  .feat-ico::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: inherit;
+    border: 1px solid color-mix(in oklab, var(--accent) 50%, transparent);
+    opacity: 0;
+    animation: feat-ping 2.6s ease-out infinite;
+    pointer-events: none;
+  }
+  @keyframes feat-ping {
+    0%   { opacity: 0.7; transform: scale(1); }
+    80%  { opacity: 0; transform: scale(1.6); }
+    100% { opacity: 0; transform: scale(1.6); }
+  }
+
+  /* travelling dot on webhook POST path */
+  .wh-travel {
+    position: relative;
+    flex: 1;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, var(--line), transparent);
+    overflow: hidden;
+  }
+  .wh-travel::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    margin-top: -4px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 30%, transparent);
+    animation: wh-fly 2.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  }
+  @keyframes wh-fly {
+    0%   { left: 0;     opacity: 0; }
+    15%  { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+  }
+</style>
