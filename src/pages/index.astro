@@ -17,6 +17,7 @@ import Compare from '../components/Compare.astro';
   description="deadletter is a local-first message observability cockpit for developers. Capture SMTP email on :1025, browse Kafka topics and Schema Registry, inspect Redis keys and pub/sub, debug webhooks — all in one UI at localhost:8025. One Go binary. Zero accidental deliveries. A superset of MailHog, Mailpit, Kafka UI, RedisInsight and webhook.site."
 >
   <Nav />
+  <main id="main">
   <Hero />
   <UIShowcase />
   <Features />
@@ -59,6 +60,7 @@ import Compare from '../components/Compare.astro';
       </div>
     </div>
   </section>
+  </main>
 
   <footer class="border-t line mt-6">
     <div class="container-x py-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">

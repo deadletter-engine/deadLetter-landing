@@ -56,10 +56,10 @@ const rows = [
                     <span class="cmp-self-name">{r.name}</span>
                   )}
                 </th>
-                <td>{r.email    ? <span class="cmp-y" aria-label="yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> : <span class="cmp-n" aria-label="no">—</span>}</td>
-                <td>{r.kafka    ? <span class="cmp-y" aria-label="yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> : <span class="cmp-n" aria-label="no">—</span>}</td>
-                <td>{r.redis    ? <span class="cmp-y" aria-label="yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> : <span class="cmp-n" aria-label="no">—</span>}</td>
-                <td>{r.webhooks ? <span class="cmp-y" aria-label="yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> : <span class="cmp-n" aria-label="no">—</span>}</td>
+                <td>{r.email    ? <span class="cmp-y" role="img" aria-label="yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> : <span class="cmp-n" role="img" aria-label="no">—</span>}</td>
+                <td>{r.kafka    ? <span class="cmp-y" role="img" aria-label="yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> : <span class="cmp-n" role="img" aria-label="no">—</span>}</td>
+                <td>{r.redis    ? <span class="cmp-y" role="img" aria-label="yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> : <span class="cmp-n" role="img" aria-label="no">—</span>}</td>
+                <td>{r.webhooks ? <span class="cmp-y" role="img" aria-label="yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> : <span class="cmp-n" role="img" aria-label="no">—</span>}</td>
                 <td class="cmp-price">{r.price}</td>
               </tr>
             ))}
