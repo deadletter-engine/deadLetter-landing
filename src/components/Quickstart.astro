@@ -3,7 +3,7 @@
 <section id="quickstart" class="py-24 sm:py-32">
   <div class="container-x">
     <div class="max-w-2xl mb-12 reveal">
-      <div class="eyebrow mb-4"><span class="numeral">04 / quickstart</span></div>
+      <div class="eyebrow mb-4"><span class="numeral">05 / quickstart</span></div>
       <h2 class="text-3xl sm:text-5xl tracking-[-0.025em] font-semibold">
         Pick a path.<br/>
         <span style="color:var(--accent)">Ship in a minute.</span>
@@ -144,7 +144,7 @@
             <span class="qs-copy-t">copy</span>
           </button>
         </div>
-<pre class="term-body text-[13.5px]" data-copy-source="source-cmd"><span class="term-prompt">$</span> git clone https://github.com/peixotomdb/deadletter.git
+<pre class="term-body text-[13.5px]" data-copy-source="source-cmd"><span class="term-prompt">$</span> git clone https://github.com/deadletter-engine/deadletter.git
 <span class="term-prompt">$</span> cd deadletter-ui &amp;&amp; pnpm install &amp;&amp; pnpm build
 <span class="term-prompt">$</span> cd .. &amp;&amp; go build -o deadletter ./cmd/deadletter
 <span class="term-prompt">$</span> ./deadletter
@@ -327,6 +327,24 @@
     background: color-mix(in oklab, var(--bg-elev) 70%, transparent);
   }
   .qs-copy:active { transform: translateY(1px); }
+  .qs-copy::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 60%, transparent);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .qs-copy { position: relative; }
+  .qs-copy.copied::before {
+    animation: qs-copy-ring 0.55s ease-out;
+  }
+  @keyframes qs-copy-ring {
+    0%   { opacity: 0.8; box-shadow: 0 0 0 0 color-mix(in oklab, #22c55e 55%, transparent); }
+    100% { opacity: 0;   box-shadow: 0 0 0 14px color-mix(in oklab, #22c55e 0%, transparent); }
+  }
   .qs-copy .qs-copy-ok { display: none; color: #22c55e; }
   .qs-copy.copied {
     color: #86efac;

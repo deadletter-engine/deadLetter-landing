@@ -317,8 +317,16 @@ body > * {
   overflow-x: auto;
   color: var(--fg);
 }
-.term-prompt { color: var(--accent); }
-.term-dim { color: var(--muted); }
+.term-prompt {
+  color: var(--accent);
+  -webkit-user-select: none;
+  user-select: none;
+}
+.term-dim {
+  color: var(--muted);
+  -webkit-user-select: none;
+  user-select: none;
+}
 .term-ok { color: #86efac; }
 .term-info { color: #7dd3fc; }
 .term-warn { color: #fde68a; }

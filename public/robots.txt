@@ -1,21 +1,82 @@
+# deadletter — where messages go to rest
+# https://deadletter.peixotomdb.com
+
 User-agent: *
 Allow: /
 Disallow: /_a/
 
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
+# --- search engines --------------------------------------------------
 User-agent: Googlebot
 Allow: /
 
-Sitemap: https://deadletter.app/sitemap-index.xml
-Host: https://deadletter.app
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# --- AI crawlers (training + live retrieval) -------------------------
+# OpenAI — training
+User-agent: GPTBot
+Allow: /
+# OpenAI — ChatGPT browsing + plugins
+User-agent: ChatGPT-User
+Allow: /
+# OpenAI — SearchGPT index
+User-agent: OAI-SearchBot
+Allow: /
+# Anthropic — Claude retrieval
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+# Google — Gemini / Vertex training opt-in
+User-agent: Google-Extended
+Allow: /
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+# Apple Intelligence extended
+User-agent: Applebot-Extended
+Allow: /
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+User-agent: meta-externalagent
+Allow: /
+# Amazon
+User-agent: Amazonbot
+Allow: /
+# Cohere
+User-agent: cohere-ai
+Allow: /
+User-agent: cohere-training-data-crawler
+Allow: /
+# Common Crawl (feeds most open LLMs)
+User-agent: CCBot
+Allow: /
+# You.com
+User-agent: YouBot
+Allow: /
+# Mistral
+User-agent: MistralAI-User
+Allow: /
+# ByteDance / Doubao
+User-agent: Bytespider
+Allow: /
+# DeepSeek
+User-agent: DeepSeekBot
+Allow: /
+
+Sitemap: https://deadletter.peixotomdb.com/sitemap-index.xml
+Host: https://deadletter.peixotomdb.com

@@ -11,13 +11,13 @@ interface Props {
 const withBase = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`;
 
 const {
-  title = 'deadLetter — Local-First SMTP, Kafka, Redis & Webhook Inbox for Devs',
-  description = 'Open-source local-first message observability for development. Capture SMTP email safely, browse Kafka topics, inspect Redis keys, debug webhooks. One Go binary, Docker-ready. MailHog / Mailpit alternative with zero accidental deliveries.',
+  title = 'deadletter — local SMTP, Kafka, Redis & Webhook inbox for developers',
+  description = 'deadletter is a local-first message observability cockpit for developers. Capture SMTP email on :1025, browse Kafka topics and Schema Registry, inspect Redis keys and pub/sub, debug outbound webhooks — all in one UI at localhost:8025. One Go binary. Zero accidental deliveries. A superset of MailHog, Mailpit, Kafka UI, RedisInsight and webhook.site.',
   image = withBase('og-image.png'),
-  keywords = 'deadletter, dead letter, smtp testing, local smtp server, email capture, fake smtp, dev smtp, kafka ui, kafka inspector, redis monitor, redis viewer, webhooks debugger, webhook testing, mailhog alternative, mailcatcher alternative, mailpit alternative, dev email inbox, message observability, sse event stream, go smtp server, docker smtp, schema registry, avro decoding, local development tools, message broker ui',
+  keywords = 'deadletter, dead letter, local smtp server, fake smtp, smtp capture, dev email inbox, mailhog alternative, mailpit alternative, mailcatcher alternative, kafka ui alternative, kafka inspector, kafka topic browser, schema registry avro, redis monitor, redis insight alternative, redis pub/sub viewer, webhook debugger, webhook testing, webhook.site alternative, smee alternative, hookdeck alternative, message observability, sse event stream, server sent events, go smtp server, docker smtp, homebrew dev tool, local development inbox, message broker ui, dead letter queue',
 } = Astro.props;
 
-const SITE_URL = Astro.site ?? new URL('https://deadletter.app');
+const SITE_URL = Astro.site ?? new URL('https://deadletter.peixotomdb.com');
 const canonicalURL = new URL(Astro.url.pathname, SITE_URL).toString();
 const ogImage = new URL(image, SITE_URL).toString();
 
@@ -27,33 +27,40 @@ const jsonLd = {
     {
       '@type': 'SoftwareApplication',
       '@id': `${SITE_URL}#software`,
-      name: 'deadLetter',
-      alternateName: ['dead letter', 'deadletter engine'],
+      name: 'deadletter',
+      alternateName: ['deadLetter', 'dead letter', 'deadletter engine'],
       applicationCategory: 'DeveloperApplication',
       applicationSubCategory: 'Message Observability',
-      operatingSystem: 'macOS, Linux, Windows (Docker)',
+      operatingSystem: 'macOS, Linux, Windows (via Docker)',
       description,
+      abstract:
+        'Local-first SMTP, Kafka, Redis and webhook inbox for developers. Captures every dev-environment message into one UI on localhost:8025.',
       url: SITE_URL.toString(),
       image: ogImage,
+      screenshot: ogImage,
       downloadUrl: 'https://hub.docker.com/r/peixotomdb/deadletter',
-      installUrl: 'https://github.com/deadletter-engine/deadLetter',
-      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-      license: 'https://opensource.org/licenses/MIT',
+      installUrl: 'https://github.com/deadletter-engine/deadletter',
+      codeRepository: 'https://github.com/deadletter-engine/deadletter',
+      programmingLanguage: ['Go', 'TypeScript'],
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
       softwareVersion: '1.2.0',
-      releaseNotes: 'https://github.com/deadletter-engine/deadLetter/releases',
+      releaseNotes: 'https://github.com/deadletter-engine/deadletter/releases',
       featureList: [
-        'SMTP capture on port 1025',
-        'Kafka topic browser with Avro/Schema Registry',
-        'Redis key & pub/sub inspector',
-        'Webhook debugger with HMAC signing',
-        'Server-Sent Events live stream',
-        'Single Go binary, Docker image',
+        'SMTP capture on port 1025 (raw .eml + JSON API)',
+        'HTML sandbox with sanitised preview',
+        'Kafka topic, partition and consumer group browser',
+        'Avro / Confluent wire format decoding via Schema Registry',
+        'Redis key inspector + live pub/sub over SSE',
+        'Inbound + outbound webhook debugger with HMAC signing and retries',
+        'Server-Sent Events live stream of all captures',
+        'Opt-in replay to a real SMTP target',
+        'Configurable retention window',
+        'Bundled deadletterctl CLI',
+        'Single Go binary · Docker image · Homebrew formula',
       ],
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '4.9',
-        reviewCount: '42',
-      },
+      author: { '@id': `${SITE_URL}#org` },
+      publisher: { '@id': `${SITE_URL}#org` },
+      isAccessibleForFree: true,
     },
     {
       '@type': 'Organization',
@@ -61,19 +68,26 @@ const jsonLd = {
       name: 'deadLetter Engine',
       url: SITE_URL.toString(),
       logo: new URL('/android-chrome-512x512.png', SITE_URL).toString(),
+      founder: { '@type': 'Person', name: 'Luís Peixoto', url: 'https://github.com/peixotomdb' },
       sameAs: [
         'https://github.com/deadletter-engine',
+        'https://github.com/deadletter-engine/deadletter',
         'https://hub.docker.com/r/peixotomdb/deadletter',
       ],
     },
     {
       '@type': 'WebSite',
       '@id': `${SITE_URL}#website`,
-      name: 'deadLetter',
+      name: 'deadletter',
       url: SITE_URL.toString(),
       description,
       publisher: { '@id': `${SITE_URL}#org` },
       inLanguage: 'en',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: 'https://github.com/deadletter-engine/deadletter/issues?q={search_term_string}',
+        'query-input': 'required name=search_term_string',
+      },
     },
     {
       '@type': 'WebPage',
@@ -82,8 +96,10 @@ const jsonLd = {
       name: title,
       description,
       isPartOf: { '@id': `${SITE_URL}#website` },
+      about: { '@id': `${SITE_URL}#software` },
       primaryImageOfPage: ogImage,
       breadcrumb: { '@id': `${canonicalURL}#breadcrumb` },
+      inLanguage: 'en',
     },
     {
       '@type': 'BreadcrumbList',
@@ -93,39 +109,99 @@ const jsonLd = {
       ],
     },
     {
+      '@type': 'HowTo',
+      '@id': `${canonicalURL}#howto-run`,
+      name: 'How to run deadletter locally',
+      description:
+        'Install deadletter via Homebrew or Docker and start capturing SMTP, Kafka, Redis, and webhook traffic at localhost:8025.',
+      totalTime: 'PT1M',
+      supply: [
+        { '@type': 'HowToSupply', name: 'Docker 20 or newer (for the Docker path)' },
+        { '@type': 'HowToSupply', name: 'Homebrew (for the macOS path)' },
+        { '@type': 'HowToSupply', name: 'Free local ports 1025 and 8025' },
+      ],
+      step: [
+        {
+          '@type': 'HowToStep',
+          position: 1,
+          name: 'Install',
+          text: 'Pick one path: `brew install deadletter-engine/deadletter/deadletter` on macOS, or `docker run -d -p 1025:1025 -p 8025:8025 peixotomdb/deadletter:latest` on any OS.',
+          url: `${canonicalURL}#quickstart`,
+        },
+        {
+          '@type': 'HowToStep',
+          position: 2,
+          name: 'Open the UI',
+          text: 'Visit http://localhost:8025 — dashboard, inbox, Kafka workspace, Redis tools, webhooks.',
+          url: `${canonicalURL}#ui`,
+        },
+        {
+          '@type': 'HowToStep',
+          position: 3,
+          name: 'Point your app',
+          text: 'Configure your SMTP host to localhost:1025 (no TLS, no auth). For Kafka / Redis, pass KAFKA_BROKERS / REDIS_ADDR env vars.',
+          url: `${canonicalURL}#ports`,
+        },
+      ],
+    },
+    {
       '@type': 'FAQPage',
       '@id': `${canonicalURL}#faq`,
       mainEntity: [
         {
           '@type': 'Question',
-          name: 'What is deadLetter?',
+          name: 'What is deadletter?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'deadLetter is a local-first message observability tool that captures SMTP email, Kafka topics, Redis events, and webhooks into a single dashboard. It runs as one Go binary or Docker container, with no accidental outbound delivery.',
+            text: 'deadletter is a local-first message observability tool for developers. It captures SMTP email, Kafka topics, Redis pub/sub, and webhooks into a single UI at localhost:8025. It runs as one Go binary, Docker image, or Homebrew formula, with zero outbound delivery by default.',
           },
         },
         {
           '@type': 'Question',
-          name: 'How is deadLetter different from MailHog or Mailpit?',
+          name: 'How is deadletter different from MailHog, Mailpit, or MailCatcher?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'MailHog and Mailpit only capture SMTP. deadLetter adds Kafka topic browsing (with Schema Registry / Avro), Redis key & pub/sub inspection, and an outbound webhook debugger — all in one UI served on localhost:8025.',
+            text: 'MailHog, Mailpit, and MailCatcher only capture SMTP. deadletter is a superset: same SMTP sink on port 1025, plus Kafka topic browsing with Schema Registry / Avro decoding, Redis key and pub/sub inspection, and an outbound webhook debugger — all in one UI on localhost:8025.',
           },
         },
         {
           '@type': 'Question',
-          name: 'Is deadLetter free and open source?',
+          name: 'How is deadletter different from Kafka UI, RedisInsight, or webhook.site?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Yes. deadLetter is MIT-licensed and free for commercial and personal use. Source is at github.com/deadletter-engine/deadLetter.',
+            text: 'Those tools each cover one protocol. deadletter is the only local binary that covers SMTP, Kafka, Redis, and webhooks together, with no SaaS, signup, or telemetry.',
           },
         },
         {
           '@type': 'Question',
-          name: 'How do I run deadLetter?',
+          name: 'Is deadletter free to use?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'docker run -d -p 1025:1025 -p 8025:8025 peixotomdb/deadletter:latest — then point your app at SMTP localhost:1025 and open the UI at localhost:8025.',
+            text: 'Yes. deadletter is free for personal and commercial development use. Source lives at github.com/deadletter-engine/deadletter.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How do I install deadletter?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'On macOS: `brew install deadletter-engine/deadletter/deadletter && brew services start deadletter`. On any OS: `docker run -d -p 1025:1025 -p 8025:8025 peixotomdb/deadletter:latest`. Then open http://localhost:8025 and point SMTP at localhost:1025.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Does deadletter send real email?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Never by default. Captured messages stay on disk as raw .eml files. Replay to a real SMTP target is opt-in via the REPLAY_ENABLED environment variable, so accidental deliveries are impossible out of the box.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What platforms does deadletter support?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'macOS and Linux natively (single Go binary), and any OS via the official Docker image. Homebrew formula is the recommended install path on macOS.',
           },
         },
       ],
@@ -174,16 +250,25 @@ const jsonLd = {
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="deadLetter — local-first SMTP, Kafka, Redis & webhook inbox" />
+    <meta property="og:image:alt" content="deadletter — local-first SMTP, Kafka, Redis & webhook inbox" />
     <meta property="og:locale" content="en_US" />
+    <meta property="article:author" content="Luís Peixoto" />
+
+    <!-- AI-crawler friendly discovery -->
+    <link rel="alternate" type="text/markdown" title="LLM-readable site summary" href={withBase('llms.txt')} />
+    <link rel="alternate" type="application/xml" title="Sitemap" href={withBase('sitemap-index.xml')} />
+    <meta name="category" content="Developer Tools, Message Observability, Local Development" />
+    <meta name="subject" content="Local-first SMTP, Kafka, Redis and webhook inbox for developers" />
+    <meta name="classification" content="software, developer tools" />
+    <meta name="coverage" content="Worldwide" />
+    <meta name="target" content="developers" />
+    <meta name="revisit-after" content="7 days" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@deadletter_dev" />
-    <meta name="twitter:creator" content="@deadletter_dev" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content="deadLetter — local-first SMTP, Kafka, Redis & webhook inbox" />
+    <meta name="twitter:image:alt" content="deadletter — local-first SMTP, Kafka, Redis & webhook inbox" />
 
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />

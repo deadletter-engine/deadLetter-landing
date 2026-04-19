@@ -1,6 +1,12 @@
 /* TEAM */
-Site: deadletter.app
+Maintainer: Luís Peixoto (@peixotomdb)
+Site: https://deadletter.peixotomdb.com
+Source: https://github.com/deadletter-engine/deadletter
+Contact: via GitHub issues
 
 /* SITE */
-Stack: Astro, Tailwind CSS v4, GitHub Pages
-Standards: HTML5, CSS3
+Name: deadletter
+Tagline: Where messages go to rest.
+Stack: Astro 6, Tailwind CSS v4, vanilla TypeScript, GitHub Pages / Vercel
+Standards: HTML5, CSS3, JSON-LD (schema.org), Open Graph, Twitter Cards, llms.txt
+Last update: 2026-04
